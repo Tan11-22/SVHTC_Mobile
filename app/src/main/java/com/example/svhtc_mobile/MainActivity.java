@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.example.svhtc_mobile.Api.ApiClient;
 import com.example.svhtc_mobile.Api.apiService.ILoginService;
+import com.example.svhtc_mobile.Controller.DKLopTinChiMain;
 import com.example.svhtc_mobile.Controller.KhoaController;
 import com.example.svhtc_mobile.Model.UserInfo;
 import com.google.gson.JsonObject;
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     TextView tvTen, tvMa, tvChuaDangNhap, tvDangNhap;
 
     LinearLayout llPGV;
-    ImageView ivKhoa, ivAccount;
+    ImageView ivKhoa, ivAccount , ivLTC;
     ILoginService iLoginService;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +72,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, KhoaController.class));
             }
         });
+        ivLTC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, DKLopTinChiMain.class));
+            }
+        });
     }
 
     private void setControl() {
@@ -81,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
         tvDangNhap = findViewById(R.id.tvDangNhap);
         ivKhoa = findViewById(R.id.ivKhoa);
         ivAccount = findViewById(R.id.ivAccount);
+        ivLTC = findViewById(R.id.ivLTC);
         llPGV = findViewById(R.id.llPGV);
         Retrofit retrofit = ApiClient.getClient("");
         iLoginService = retrofit.create(ILoginService.class);

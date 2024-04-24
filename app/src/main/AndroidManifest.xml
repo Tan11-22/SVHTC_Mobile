@@ -17,6 +17,9 @@
             android:name=".Controller.KhoaController"
             android:exported="false" />
         <activity
+            android:name=".Controller.DKLopTinChiMain"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
