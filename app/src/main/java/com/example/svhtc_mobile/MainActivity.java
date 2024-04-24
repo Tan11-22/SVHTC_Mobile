@@ -131,7 +131,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String username = edtUsername.getText().toString().trim();
                 String password = edtPassword.getText().toString().trim();
-                Toast.makeText(MainActivity.this,"Đăng nhập thất bại!", Toast.LENGTH_SHORT).show();
                 iLoginService.login(username,password).enqueue(new Callback<JsonObject>() {
                     @Override
                     public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
