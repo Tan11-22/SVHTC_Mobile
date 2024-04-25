@@ -14,7 +14,6 @@ dependencyResolutionManagement {
             url =uri("https://cardinalcommerceprod.jfrog.io/artifactory/android")
             credentials{
                 username = "paypal_sgerritz"
-
             }
         }
     }
