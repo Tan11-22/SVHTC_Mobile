@@ -12,6 +12,7 @@ public class SinhVien {
     private String sdt;
     private String hinhanh;
     private String email;
+
     public SinhVien()
     {
 
@@ -31,6 +32,7 @@ public class SinhVien {
         this.hinhanh = hinhanh;
         this.email = email;
     }
+
 
     public String getEmail() {
         return email;
