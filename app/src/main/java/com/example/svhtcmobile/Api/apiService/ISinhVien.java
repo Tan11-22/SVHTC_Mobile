@@ -5,6 +5,7 @@ import com.example.svhtcmobile.Model.DKLTC;
 import com.example.svhtcmobile.Model.HocPhiHocKy;
 import com.example.svhtcmobile.Model.HocPhiKeToan;
 import com.example.svhtcmobile.Model.HocPhiSinhVien;
+import com.example.svhtcmobile.Model.SinhVien;
 
 import java.util.List;
 import java.util.Map;
@@ -51,6 +52,10 @@ public interface ISinhVien {
     @GET("api/lop-tin-chi/bo-dang-ky")
     Call<Map<String, String>> boDangKy(@Query("maSV")String maSV,
                                        @Query("maLTC")int maLTC);
+
+    //Về sinh viên
+    @GET("api/sinh-vien/tim-sinh-vien")
+    Call<SinhVien> timSV(@Query("ma-sv")String maSV);
 
 
 }

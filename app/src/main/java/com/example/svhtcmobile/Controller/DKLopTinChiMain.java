@@ -1,5 +1,7 @@
 package com.example.svhtcmobile.Controller;
 
+import static com.example.svhtcmobile.Controller.Function.layHocKyHienTai;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -23,6 +25,7 @@ import com.example.svhtcmobile.Api.ApiClient;
 import com.example.svhtcmobile.Api.apiService.ISinhVien;
 import com.example.svhtcmobile.Model.DDKLTC;
 import com.example.svhtcmobile.Model.DKLTC;
+import com.example.svhtcmobile.Model.SinhVien;
 import com.example.svhtcmobile.R;
 
 import java.util.ArrayList;
@@ -39,9 +42,9 @@ public class DKLopTinChiMain extends AppCompatActivity {
     private ImageButton imgBtnBack, imgBtnLogout;
     private Spinner spMaLop, spTenMH;
     private ListView lvDKLTC, lvDDKLTC;
-    private String maLop, maSV;
-    private String nienKhoa="2023-2024";
-    private int hocKy=2;
+    private String maLop, maSV, hoTen;
+    private String nienKhoa;
+    private int hocKy;
     private List<DKLTC> data= new ArrayList<>();
     private List<DKLTC> all_data= new ArrayList<>();
     private List<DDKLTC> dataDDK=new ArrayList<>();
@@ -75,8 +78,7 @@ public class DKLopTinChiMain extends AppCompatActivity {
         imgBtnLogout=findViewById(R.id.imgBtnLogout);
         spMaLop=findViewById(R.id.spMaLop);
         spTenMH=findViewById(R.id.spTenMH);
-        maLop=tvTTMaLop.getText().toString();
-        maSV=tvTTMSSV.getText().toString();
+
         accountSharedPref = getSharedPreferences("Account", Context.MODE_PRIVATE);
         String token = accountSharedPref.getString("token", "");
         String ho = accountSharedPref.getString("ho", "");
@@ -85,6 +87,34 @@ public class DKLopTinChiMain extends AppCompatActivity {
         String quyen = accountSharedPref.getString("quyen", "");
         Retrofit retrofit = ApiClient.getClient(token);
         iSinhVien = retrofit.create(ISinhVien.class);
+        //Set thông tin
+        maSV=username;
+        hoTen=ho+" "+ten;
+        DocSV();
+        tvTTHoTen.setText(hoTen);
+        tvTTMSSV.setText(maSV);
+
+        //Set nienKhoa va hocKy
+        Map<String,Object> thongTin=layHocKyHienTai();
+        nienKhoa= (String)thongTin.get("nienKhoa");
+        hocKy= (Integer)thongTin.get("hocKy");
+    }
+    public void DocSV(){
+        iSinhVien.timSV(maSV).enqueue(new Callback<SinhVien>() {
+            @Override
+            public void onResponse(Call<SinhVien> call, Response<SinhVien> response) {
+                SinhVien sinhVien=response.body();
+                maLop=sinhVien.getMalop();
+                tvTTMaLop.setText(maLop);
+
+            }
+
+            @Override
+            public void onFailure(Call<SinhVien> call, Throwable throwable) {
+                System.out.println(throwable.getMessage().toString());
+                Toast.makeText(DKLopTinChiMain.this, throwable.getMessage().toString(),Toast.LENGTH_SHORT).show();
+            }
+        });
     }
     public void apHocPhi(){
         iSinhVien.apHocPhi(maSV,nienKhoa,hocKy).enqueue(new Callback<Map<String, String>>() {

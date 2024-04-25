@@ -1,5 +1,7 @@
 package com.example.svhtcmobile.Controller;
 
+import static com.example.svhtcmobile.Controller.Function.layHocKyHienTai;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -21,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.svhtcmobile.Api.ApiClient;
 import com.example.svhtcmobile.Api.apiService.ISinhVien;
+import com.example.svhtcmobile.Model.SinhVien;
 import com.paypal.checkout.approve.Approval;
 import com.paypal.checkout.approve.OnApprove;
 import com.paypal.checkout.createorder.CreateOrder;
@@ -46,6 +49,7 @@ import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 
 
@@ -57,7 +61,8 @@ public class ChiTietThanhToanMain extends AppCompatActivity {
     private TableRow paymentRow;
     private Spinner spHinhThuc;
     private ImageView ivHinh;
-    private String nienKhoa, maSV,maLop;
+    private String maSV, maLop, hoTen;
+    private String nienKhoa;
     private int hocKy, soTienDong;
     private List<String> hinhThucData = new ArrayList<>();
     private ArrayAdapter adapter_lht;
@@ -109,6 +114,30 @@ public class ChiTietThanhToanMain extends AppCompatActivity {
         String quyen = accountSharedPref.getString("quyen", "");
         Retrofit retrofit = ApiClient.getClient(token);
         iSinhVien = retrofit.create(ISinhVien.class);
+
+        //Set thông tin sinh viên
+        maSV=username;
+        hoTen=ho+" "+ten;
+        DocSV();
+        tvTTHoTen.setText(hoTen);
+        tvTTMSSV.setText(maSV);
+    }
+    public void DocSV(){
+        iSinhVien.timSV(maSV).enqueue(new Callback<SinhVien>() {
+            @Override
+            public void onResponse(Call<SinhVien> call, Response<SinhVien> response) {
+                SinhVien sinhVien=response.body();
+                maLop=sinhVien.getMalop();
+                tvTTMaLop.setText(maLop);
+
+            }
+
+            @Override
+            public void onFailure(Call<SinhVien> call, Throwable throwable) {
+                System.out.println(throwable.getMessage().toString());
+                Toast.makeText(ChiTietThanhToanMain.this, throwable.getMessage().toString(),Toast.LENGTH_SHORT).show();
+            }
+        });
     }
     public float convertVNDToUSD(int soTien){
         float tyThoi= 25000.00F;//VND

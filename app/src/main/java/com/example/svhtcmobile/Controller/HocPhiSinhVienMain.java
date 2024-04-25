@@ -1,5 +1,7 @@
 package com.example.svhtcmobile.Controller;
 
+import static com.example.svhtcmobile.Controller.Function.layHocKyHienTai;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,6 +23,7 @@ import com.example.svhtcmobile.Api.ApiClient;
 import com.example.svhtcmobile.Api.apiService.ISinhVien;
 import com.example.svhtcmobile.Model.HocPhiHocKy;
 import com.example.svhtcmobile.Model.HocPhiSinhVien;
+import com.example.svhtcmobile.Model.SinhVien;
 import com.example.svhtcmobile.R;
 
 import java.time.LocalDate;
@@ -32,6 +35,7 @@ import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 
 
@@ -50,7 +54,7 @@ public class HocPhiSinhVienMain extends AppCompatActivity {
     CustomHocPhiSinhVienAdapter adapter_hpsv;
     ArrayAdapter adapter_dsNienKhoa, adapter_dsHocKy;
     private int index;
-    private String maSV;
+    private String maSV, maLop, hoTen;
     private String nienKhoa;
     private int hocKy;
 
@@ -76,9 +80,8 @@ public class HocPhiSinhVienMain extends AppCompatActivity {
         lvHPSV=findViewById(R.id.lvHPSV);
         imgBtnBack=findViewById(R.id.imgBtnBack);
         maSV=tvTTMSSV.getText().toString();
-        Map<String,Object> thongTin=layHocKyHienTai();
-        nienKhoa= (String)thongTin.get("nienKhoa");
-        hocKy= (Integer)thongTin.get("hocKy");
+
+
         accountSharedPref = getSharedPreferences("Account", Context.MODE_PRIVATE);
         String token = accountSharedPref.getString("token", "");
         String ho = accountSharedPref.getString("ho", "");
@@ -87,41 +90,34 @@ public class HocPhiSinhVienMain extends AppCompatActivity {
         String quyen = accountSharedPref.getString("quyen", "");
         Retrofit retrofit = ApiClient.getClient(token);
         iSinhVien = retrofit.create(ISinhVien.class);
+
+        //Set thông tin niên khóa học kỳ
+        Map<String,Object> thongTin=layHocKyHienTai();
+        nienKhoa= (String)thongTin.get("nienKhoa");
+        hocKy= (Integer)thongTin.get("hocKy");
+        //Set thông tin sinh viên
+        maSV=username;
+        hoTen=ho+" "+ten;
+        DocSV();
+        tvTTHoTen.setText(hoTen);
+        tvTTMSSV.setText(maSV);
     }
-    public Map<String, Object> layHocKyHienTai(){
-        Map<String, Object > thongTin=new HashMap<>();
-        int semester;
-        String academicYear;
-        LocalDate time;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            time = LocalDate.now();
-        }
-        else{
-            System.out.println("Phien ban khong phu hop");
-            return null;
-        }
-        int year=time.getYear();
-        Month month=time.getMonth();
-        if((month.getValue()>=month.SEPTEMBER.getValue())&&(month.getValue()<=month.JANUARY.getValue())){
-            semester=1;
-            if(month.getValue()<=month.DECEMBER.getValue()){
-                academicYear=String.valueOf(year)+"-"+String.valueOf(year+1);
+    public void DocSV(){
+        iSinhVien.timSV(maSV).enqueue(new Callback<SinhVien>() {
+            @Override
+            public void onResponse(Call<SinhVien> call, Response<SinhVien> response) {
+                SinhVien sinhVien=response.body();
+                maLop=sinhVien.getMalop();
+                tvTTMaLop.setText(maLop);
+
             }
-            else{
-                academicYear=String.valueOf(year-1)+"-"+String.valueOf(year);
+
+            @Override
+            public void onFailure(Call<SinhVien> call, Throwable throwable) {
+                System.out.println(throwable.getMessage().toString());
+                Toast.makeText(HocPhiSinhVienMain.this, throwable.getMessage().toString(),Toast.LENGTH_SHORT).show();
             }
-        }else {
-            academicYear=String.valueOf(year-1)+"-"+String.valueOf(year);
-            if(month.getValue()<=month.JULY.getValue()){
-                semester=2;
-            }
-            else{
-                semester=3;
-            }
-        }
-        thongTin.put("nienKhoa",academicYear);
-        thongTin.put("hocKy",semester);
-        return thongTin;
+        });
     }
     public void DocDL(){
         iSinhVien.getDSHocPhiHocKy(maSV,nienKhoa,hocKy).enqueue(new Callback<List<HocPhiHocKy>>() {
