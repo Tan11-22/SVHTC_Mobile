@@ -27,11 +27,13 @@ import com.example.svhtcmobile.Api.ApiClient;
 import com.example.svhtcmobile.Api.apiService.ILoginService;
 import com.example.svhtcmobile.Controller.DKLopTinChiMain;
 import com.example.svhtcmobile.Controller.DoiMatKhauActivity;
+import com.example.svhtcmobile.Controller.HocPhiController;
 import com.example.svhtcmobile.Controller.HocPhiSinhVienMain;
 import com.example.svhtcmobile.Controller.KhoaController;
 import com.example.svhtcmobile.Controller.MainQuanTriGiangVien;
 import com.example.svhtcmobile.Controller.MainQuanTriMonHoc;
 import com.example.svhtcmobile.Controller.MainQuanTriSinhVien;
+import com.example.svhtcmobile.Controller.MainThongTinSVGV;
 import com.example.svhtcmobile.Controller.QuenMatKhauActivity;
 import com.example.svhtcmobile.Controller.TaiKhoanController;
 import com.example.svhtcmobile.Model.UserInfo;
@@ -53,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     TextView tvTen, tvMa, tvChuaDangNhap, tvDangNhap;
 
     LinearLayout llGV , llSV;
-    ImageView ivKhoa, ivAccount , ivLTC, ivHP, ivMonHoc, ivSinhVien, ivGiangVien,ivDoiMatKhau;
+    ImageView ivKhoa, ivAccount , ivLTC, ivHP, ivMonHoc, ivSinhVien, ivGiangVien,ivDoiMatKhau, ivHinhAnh,ivHPGV;
     ILoginService iLoginService;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +125,20 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, TaiKhoanController.class));
             }
         });
+        ivHinhAnh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(loginStatus){
+                    startActivity(new Intent(MainActivity.this, MainThongTinSVGV.class));
+                }
+            }
+        });
+        ivHPGV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, HocPhiController.class));
+            }
+        });
     }
 
     private void setControl() {
@@ -139,6 +155,8 @@ public class MainActivity extends AppCompatActivity {
         ivSinhVien=findViewById(R.id.ivSinhVien);
         ivGiangVien=findViewById(R.id.ivGiangVien);
         ivDoiMatKhau=findViewById(R.id.ivDoiMatKhau);
+        ivHinhAnh=findViewById(R.id.ivHinhAnh);
+        ivHPGV=findViewById(R.id.ivHPGV);
         llGV = findViewById(R.id.llGV);
         llSV = findViewById(R.id.llSV);
         Retrofit retrofit = ApiClient.getClient("");
@@ -265,7 +283,7 @@ public class MainActivity extends AppCompatActivity {
         tvMa.setVisibility(View.VISIBLE);
         tvChuaDangNhap.setVisibility(View.GONE);
         tvDangNhap.setText("Đăng xuất");
-        ivDangNhap.setImageResource(R.drawable.logout1);
+        ivDangNhap.setImageResource(R.drawable.logout);
         loginStatus = true;
     }
 

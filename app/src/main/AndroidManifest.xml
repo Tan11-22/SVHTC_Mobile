@@ -24,6 +24,18 @@
             android:name="com.example.svhtcmobile.Controller.KhoaController"
             android:exported="false" />
         <activity
+            android:name="com.example.svhtcmobile.Controller.HocPhiController"
+            android:exported="false" />
+        <activity
+            android:name="com.example.svhtcmobile.Controller.MainChiTietHocPhi"
+            android:exported="false" />
+        <activity
+            android:name="com.example.svhtcmobile.Controller.MainThongTinSVGV"
+            android:exported="false" />
+        <activity
+            android:name="com.example.svhtcmobile.Controller.MainVeNhaTruong"
+            android:exported="false" />
+        <activity
             android:name="com.example.svhtcmobile.Controller.TaiKhoanController"
             android:exported="false" />
         <activity
