@@ -16,6 +16,8 @@ public class Lop {
 
     @SerializedName("idHe")
     private int idHe;
+    @SerializedName("trangThai")
+    private boolean trangThai;
 
     public Lop() {
     }
@@ -66,5 +68,13 @@ public class Lop {
 
     public void setIdHe(int idHe) {
         this.idHe = idHe;
+    }
+
+    public boolean isTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(boolean trangThai) {
+        this.trangThai = trangThai;
     }
 }
