@@ -8,10 +8,13 @@ public class SinhVien {
     private String diachi;
     private String ngaysinh;
     private String malop;
+    private String lop;
     private Boolean danghihoc ;
     private String sdt;
     private String hinhanh;
     private String email;
+
+    private String imgResource;
     public SinhVien()
     {
 
@@ -31,6 +34,7 @@ public class SinhVien {
         this.hinhanh = hinhanh;
         this.email = email;
     }
+
 
     public String getEmail() {
         return email;
@@ -120,4 +124,19 @@ public class SinhVien {
         this.sdt = sdt;
     }
 
+    public String getImageResource() {
+        return imgResource;
+    }
+
+    public void setImageResource(String imgResource) {
+        this.imgResource = imgResource;
+    }
+
+    public String getLop() {
+        return lop;
+    }
+
+    public void setLop(String lop) {
+        this.lop = lop;
+    }
 }
