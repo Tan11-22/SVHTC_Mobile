@@ -26,6 +26,11 @@ import android.widget.Toast;
 import com.example.svhtcmobile.Api.ApiClient;
 import com.example.svhtcmobile.Api.apiService.ILoginService;
 import com.example.svhtcmobile.Controller.DKLopTinChiMain;
+import com.example.svhtcmobile.Controller.DanhSachHeDaoTao;
+import com.example.svhtcmobile.Controller.DanhSachLop;
+import com.example.svhtcmobile.Controller.DanhSachLopTinChi;
+import com.example.svhtcmobile.Controller.DanhSachMonHocGV;
+import com.example.svhtcmobile.Controller.DanhSachNganh;
 import com.example.svhtcmobile.Controller.DoiMatKhauActivity;
 import com.example.svhtcmobile.Controller.HocPhiController;
 import com.example.svhtcmobile.Controller.HocPhiSinhVienMain;
@@ -36,6 +41,7 @@ import com.example.svhtcmobile.Controller.MainQuanTriSinhVien;
 import com.example.svhtcmobile.Controller.MainThongTinSVGV;
 import com.example.svhtcmobile.Controller.QuenMatKhauActivity;
 import com.example.svhtcmobile.Controller.TaiKhoanController;
+import com.example.svhtcmobile.Controller.XemDiem;
 import com.example.svhtcmobile.Model.UserInfo;
 import com.google.gson.JsonObject;
 
@@ -55,7 +61,8 @@ public class MainActivity extends AppCompatActivity {
     TextView tvTen, tvMa, tvChuaDangNhap, tvDangNhap;
 
     LinearLayout llGV , llSV;
-    ImageView ivKhoa, ivAccount , ivLTC, ivHP, ivMonHoc, ivSinhVien, ivGiangVien,ivDoiMatKhau, ivHinhAnh,ivHPGV;
+    ImageView ivKhoa, ivAccount , ivLTC, ivHP, ivMonHoc, ivSinhVien,
+            ivGiangVien,ivDoiMatKhau, ivHinhAnh,ivHPGV, ivXemDiem, ivNhapDiem, ivLopTinChi, ivLop, ivHe, ivNganh;
     ILoginService iLoginService;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,6 +146,42 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, HocPhiController.class));
             }
         });
+        ivXemDiem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, XemDiem.class));
+            }
+        });
+        ivNhapDiem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, DanhSachMonHocGV.class));
+            }
+        });
+        ivLopTinChi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, DanhSachLopTinChi.class));
+            }
+        });
+        ivLop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, DanhSachLop.class));
+            }
+        });
+        ivHe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, DanhSachHeDaoTao.class));
+            }
+        });
+        ivNganh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, DanhSachNganh.class));
+            }
+        });
     }
 
     private void setControl() {
@@ -157,6 +200,12 @@ public class MainActivity extends AppCompatActivity {
         ivDoiMatKhau=findViewById(R.id.ivDoiMatKhau);
         ivHinhAnh=findViewById(R.id.ivHinhAnh);
         ivHPGV=findViewById(R.id.ivHPGV);
+        ivXemDiem = findViewById(R.id.ivXemDiem);
+        ivNhapDiem = findViewById(R.id.ivNhapDiem);
+        ivLopTinChi = findViewById(R.id.ivLopTinChi);
+        ivLop = findViewById(R.id.ivLop);
+        ivHe = findViewById(R.id.ivHe);
+        ivNganh = findViewById(R.id.ivNganh);
         llGV = findViewById(R.id.llGV);
         llSV = findViewById(R.id.llSV);
         Retrofit retrofit = ApiClient.getClient("");

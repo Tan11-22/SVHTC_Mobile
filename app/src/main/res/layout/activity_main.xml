@@ -153,7 +153,6 @@
                     android:orientation="vertical"
                     android:paddingLeft="20dp"
                     android:paddingTop="2dp"
-                    android:visibility="gone"
                     >
 
                     <LinearLayout
@@ -293,6 +292,113 @@
                                 android:layout_height="30dp"
                                 android:src="@drawable/hand" />
                         </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="20dp"
+                            android:background="@drawable/round_back_red"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Nhập điểm"
+                                android:textSize="10dp" />
+
+                            <ImageView
+                                android:id="@+id/ivNhapDiem"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/hand" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="20dp"
+                            android:background="@drawable/round_back_red"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Lớp tín chỉ"
+                                android:textSize="10dp" />
+
+                            <ImageView
+                                android:id="@+id/ivLopTinChi"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/hand" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="20dp"
+                            android:background="@drawable/round_back_red"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Lớp"
+                                android:textSize="10dp" />
+
+                            <ImageView
+                                android:id="@+id/ivLop"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/hand" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="20dp"
+                            android:background="@drawable/round_back_red"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Hệ đào tạo"
+                                android:textSize="10dp" />
+
+                            <ImageView
+                                android:id="@+id/ivHe"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/hand" />
+                        </LinearLayout>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+                        <LinearLayout
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+
+                            android:background="@drawable/round_back_red"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Ngành"
+                                android:textSize="10dp" />
+
+                            <ImageView
+                                android:id="@+id/ivNganh"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/hand" />
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
             <LinearLayout
@@ -301,8 +407,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingLeft="20dp"
-                android:paddingTop="2dp"
-                android:visibility="gone">
+                android:visibility="gone"
+                android:paddingTop="2dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -364,6 +470,26 @@
 
                         <ImageView
                             android:id="@+id/ivDoiMatKhau"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/hand" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="20dp"
+                        android:background="@drawable/round_back_red"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Xem Điểm"
+                            android:textSize="10dp" />
+
+                        <ImageView
+                            android:id="@+id/ivXemDiem"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:src="@drawable/hand" />
