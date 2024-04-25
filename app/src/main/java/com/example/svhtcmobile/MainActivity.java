@@ -33,6 +33,7 @@ import com.example.svhtcmobile.Controller.MainQuanTriGiangVien;
 import com.example.svhtcmobile.Controller.MainQuanTriMonHoc;
 import com.example.svhtcmobile.Controller.MainQuanTriSinhVien;
 import com.example.svhtcmobile.Controller.QuenMatKhauActivity;
+import com.example.svhtcmobile.Controller.TaiKhoanController;
 import com.example.svhtcmobile.Model.UserInfo;
 import com.google.gson.JsonObject;
 
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences accountSharedPref;
     TextView tvTen, tvMa, tvChuaDangNhap, tvDangNhap;
 
-    LinearLayout llPGV;
+    LinearLayout llGV , llSV;
     ImageView ivKhoa, ivAccount , ivLTC, ivHP, ivMonHoc, ivSinhVien, ivGiangVien,ivDoiMatKhau;
     ILoginService iLoginService;
     @Override
@@ -116,6 +117,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, MainQuanTriMonHoc.class));
             }
         });
+        ivAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, TaiKhoanController.class));
+            }
+        });
     }
 
     private void setControl() {
@@ -132,7 +139,8 @@ public class MainActivity extends AppCompatActivity {
         ivSinhVien=findViewById(R.id.ivSinhVien);
         ivGiangVien=findViewById(R.id.ivGiangVien);
         ivDoiMatKhau=findViewById(R.id.ivDoiMatKhau);
-        llPGV = findViewById(R.id.llPGV);
+        llGV = findViewById(R.id.llGV);
+        llSV = findViewById(R.id.llSV);
         Retrofit retrofit = ApiClient.getClient("");
         iLoginService = retrofit.create(ILoginService.class);
     }
@@ -205,7 +213,12 @@ public class MainActivity extends AppCompatActivity {
                                         userInfo = mapJsonObjectToUI(jsonObject);
                                         saveNameAccountandRole(userInfo.getHo(), userInfo.getTen(), userInfo.getTenQuyen());
                                         showInfo(userInfo);
-                                        llPGV.setVisibility(View.VISIBLE);
+                                        if(userInfo.getTenQuyen().equals("GIANGVIEN")){
+                                            llGV.setVisibility(View.VISIBLE);
+                                        } else if (userInfo.getTenQuyen().equals(("SINHVIEN"))){
+                                            llSV.setVisibility(View.VISIBLE);
+                                        }
+
                                     }
 
                                 }
@@ -265,6 +278,11 @@ public class MainActivity extends AppCompatActivity {
         tvChuaDangNhap.setVisibility(View.VISIBLE);
         tvDangNhap.setText("Đăng nhập");
         ivDangNhap.setImageResource(R.drawable.login);
+        if(userInfo.getTenQuyen().equals("GIANGVIEN")) {
+            llGV.setVisibility(View.GONE);
+        } else if(userInfo.getTenQuyen().equals("SINHVIEN")) {
+            llSV.setVisibility(View.GONE);
+        }
         userInfo = null;
     }
 

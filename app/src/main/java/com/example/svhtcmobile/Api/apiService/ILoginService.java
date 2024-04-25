@@ -1,7 +1,9 @@
 package com.example.svhtcmobile.Api.apiService;
 
+import com.example.svhtcmobile.Model.CTDTDTO;
 import com.example.svhtcmobile.Model.Khoa;
 import com.example.svhtcmobile.Model.Nganh;
+import com.example.svhtcmobile.Model.TaiKhoanDTO;
 import com.google.gson.JsonObject;
 
 import java.util.List;
@@ -39,4 +41,20 @@ public interface ILoginService {
     @PUT("auth/delete-khoa")
     Call<Boolean> deleteKhoa(@Query("makhoa") String ma
     );
+
+
+    @GET("auth/danh-sach-tai-khoan")
+    Call<List<TaiKhoanDTO>> getDanhSachTaiKhoan(@Query("id")int id);
+
+    @PUT("auth/reset-pass")
+    Call<Boolean> resetPassword(@Query("username") String username);
+
+    @PUT("auth/set-status")
+    Call<Boolean> setStatus(@Query("username") String username,
+                            @Query("status") boolean status
+    );
+
+    @GET("auth/get-ctdt")
+    Call<List<CTDTDTO>> getCTDT(@Query("ma-lop") String maLop,
+                                @Query("nien-khoa") String nienKhoa);
 }
