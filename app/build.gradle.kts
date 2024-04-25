@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.svhtc_mobile"
+    namespace = "com.example.svhtcmobile"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.svhtc_mobile"
+        applicationId = "com.example.svhtcmobile"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -42,4 +42,8 @@ dependencies {
     implementation ("com.google.code.gson:gson:2.10.1")
     implementation("com.squareup.retrofit2:retrofit:2.10.0")
     implementation("com.squareup.retrofit2:converter-gson:2.10.0")
+
+    //thư viện paypal
+    implementation("com.paypal.checkout:android-sdk:1.1.0")
+    implementation("commons-codec:commons-codec:1.14")
 }

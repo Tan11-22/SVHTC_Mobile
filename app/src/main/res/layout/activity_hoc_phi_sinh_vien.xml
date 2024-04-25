@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".DKLopTinChiMain">
+    tools:context=".HocPhiSinhVienMain">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -46,12 +47,12 @@
                 android:layout_weight="6"
                 android:paddingLeft="10dp"
                 android:layout_gravity="center">
-
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="28dp"
+                    android:layout_height="wrap_content"
                     android:text="Trang học phí"
-                    android:textSize="15dp" />
+                    android:textSize="15dp"
+                    />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -126,41 +127,44 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
         app:cardCornerRadius="8dp">
-    <TableLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:orientation="vertical">
-        <TableRow>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="Lớp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="5"
-                android:text="Môn học"/>
-        </TableRow>
-        <TableRow>
-            <Spinner
-                android:id="@+id/spMaLop"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"/>
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:orientation="vertical">
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:text="Niên khóa"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="Học kỳ"/>
+            </TableRow>
+            <TableRow>
+                <Spinner
+                    android:id="@+id/spNienKhoa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"/>
 
-            <Spinner
-                android:id="@+id/spTenMH"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="5"/>
-        </TableRow>
+                <Spinner
+                    android:id="@+id/spHocKy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"/>
+            </TableRow>
 
-    </TableLayout>
+        </TableLayout>
     </androidx.cardview.widget.CardView>
+
     <androidx.cardview.widget.CardView
 
         android:layout_width="match_parent"
@@ -180,7 +184,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Các lớp đang mở"
+                android:text="Học phí môn trong học kỳ"
                 android:textColor="#EF0707"
                 android:textStyle="bold" />
             <TableLayout
@@ -188,38 +192,20 @@
                 android:layout_height="wrap_content">
 
                 <TableRow>
-                    <TextView
-                        android:layout_width="60dp"
-                        android:padding="5dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Mã lớp tín chỉ" />
+
                     <TextView
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
                         android:gravity="center"
                         android:text="Mã môn học" />
-                    <TextView
-                        android:layout_width="60dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        android:gravity="center"
-                        android:text="Tên môn học" />
-                    <TextView
-                        android:layout_width="50dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Nhóm" />
 
                     <TextView
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="3"
                         android:gravity="center"
-                        android:text="Số sinh viên tối thiểu" />
+                        android:text="Tên môn học" />
 
                     <TextView
                         android:layout_width="50dp"
@@ -227,10 +213,24 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="Số tín chỉ" />
+
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Học lại" />
+
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:gravity="center"
+                        android:text="Số tiền" />
                 </TableRow>
 
                 <ListView
-                    android:id="@+id/lvDKLTC"
+                    android:id="@+id/lvHP"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -240,6 +240,42 @@
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="0.5"
+        app:cardCornerRadius="8dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="Tổng tiền: " />
+            <TextView
+                android:id="@+id/tvTongTien"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="(Mời chọn học kỳ chưa thanh toán ở dưới)" />
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -247,65 +283,72 @@
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
         app:cardCornerRadius="8dp"
-        android:layout_weight="1">
+        android:layout_weight="5">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:text="Học phí các kỳ"
+            android:layout_gravity="center"
+            android:textColor="#EF0707"
+            android:textStyle="bold" />
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TableRow>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Lớp đã đăng ký"
-                android:textColor="#EF0707"
-                android:textStyle="bold" />
-            <TableLayout
+                <TextView
+                    android:layout_width="50dp"
+                    android:padding="5dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:gravity="center"
+                    android:text="Niên khóa" />
+
+                <TextView
+                    android:layout_width="50dp"
+                    android:padding="5dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Học kỳ"
+                    android:inputType="number"/>
+                <TextView
+                    android:layout_width="50dp"
+                    android:padding="5dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:text="Học phí"
+                    android:inputType="number"/>
+                <TextView
+                    android:layout_width="50dp"
+                    android:padding="5dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:text="Đã đóng"
+                    android:inputType="number"/>
+                <TextView
+                    android:layout_width="50dp"
+                    android:padding="5dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:text="Nợ"
+                    android:inputType="number"/>
+            </TableRow>
+            <ListView
+                android:id="@+id/lvHPSV"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent" />
+        </TableLayout>
 
-                <TableRow>
-                    <TextView
-                        android:layout_width="60dp"
-                        android:padding="5dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Mã lớp tín chỉ" />
-                    <TextView
-                        android:layout_width="60dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:gravity="center"
-                        android:text="Mã môn học" />
-                    <TextView
-                        android:layout_width="60dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        android:gravity="center"
-                        android:text="Tên môn học" />
-                    <TextView
-                        android:layout_width="50dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Nhóm" />
-
-                    <TextView
-                        android:layout_width="50dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Số tín chỉ" />
-                </TableRow>
-
-                <ListView
-                    android:id="@+id/lvDDKLTC"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </TableLayout>
-        </LinearLayout>
+    </LinearLayout>
     </androidx.cardview.widget.CardView>
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
