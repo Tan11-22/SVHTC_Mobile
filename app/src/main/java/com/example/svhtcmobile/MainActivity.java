@@ -283,7 +283,7 @@ public class MainActivity extends AppCompatActivity {
         tvMa.setVisibility(View.VISIBLE);
         tvChuaDangNhap.setVisibility(View.GONE);
         tvDangNhap.setText("Đăng xuất");
-        ivDangNhap.setImageResource(R.drawable.logout1);
+        ivDangNhap.setImageResource(R.drawable.logout);
         loginStatus = true;
     }
 
