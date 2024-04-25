@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences accountSharedPref;
     TextView tvTen, tvMa, tvChuaDangNhap, tvDangNhap;
 
-    LinearLayout llGV , llSV;
+    LinearLayout llGV , llSV, llChuaDN;
     ImageView ivKhoa, ivAccount , ivLTC, ivHP, ivMonHoc, ivSinhVien, ivGiangVien,ivDoiMatKhau, ivHinhAnh,ivHPGV;
     ILoginService iLoginService;
     @Override
@@ -159,6 +159,7 @@ public class MainActivity extends AppCompatActivity {
         ivHPGV=findViewById(R.id.ivHPGV);
         llGV = findViewById(R.id.llGV);
         llSV = findViewById(R.id.llSV);
+        llChuaDN = findViewById(R.id.llChuaDN);
         Retrofit retrofit = ApiClient.getClient("");
         iLoginService = retrofit.create(ILoginService.class);
     }
@@ -236,18 +237,20 @@ public class MainActivity extends AppCompatActivity {
                                         } else if (userInfo.getTenQuyen().equals(("SINHVIEN"))){
                                             llSV.setVisibility(View.VISIBLE);
                                         }
-
+                                        llChuaDN.setVisibility(View.GONE);
                                     }
 
                                 }
-
                                 @Override
                                 public void onFailure(Call<JsonObject> call, Throwable throwable) {
                                     Toast.makeText(MainActivity.this,"Đăng nhập thất bại!", Toast.LENGTH_SHORT).show();
                                 }
                             });
                             dialog.dismiss();
-                        } else {
+                        } else if(response.code()==400){
+                            Toast.makeText(MainActivity.this,"Tài khoản của bạn không hoạt động!", Toast.LENGTH_SHORT).show();
+                        } else
+                        {
                             Toast.makeText(MainActivity.this,"Đăng nhập thất bại!", Toast.LENGTH_SHORT).show();
 
                         }
@@ -256,7 +259,6 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<JsonObject> call, Throwable throwable) {
                         Toast.makeText(MainActivity.this,"Đăng nhập thất bại!" + throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                        Log.e("loimoivcl", throwable.getMessage());
                     }
                 });
             }
@@ -301,7 +303,9 @@ public class MainActivity extends AppCompatActivity {
         } else if(userInfo.getTenQuyen().equals("SINHVIEN")) {
             llSV.setVisibility(View.GONE);
         }
+        llChuaDN.setVisibility(View.VISIBLE);
         userInfo = null;
+        clearSharedPref(accountSharedPref);
     }
 
     private void saveTokenAccount(String username, String token){
