@@ -25,9 +25,12 @@ import android.widget.Toast;
 import com.example.svhtcmobile.Api.ApiClient;
 import com.example.svhtcmobile.Api.apiService.ILoginService;
 import com.example.svhtcmobile.Controller.DKLopTinChiMain;
+import com.example.svhtcmobile.Controller.DoiMatKhauActivity;
 import com.example.svhtcmobile.Controller.HocPhiSinhVienMain;
 import com.example.svhtcmobile.Controller.KhoaController;
+import com.example.svhtcmobile.Controller.MainQuanTriGiangVien;
 import com.example.svhtcmobile.Controller.MainQuanTriMonHoc;
+import com.example.svhtcmobile.Controller.MainQuanTriSinhVien;
 import com.example.svhtcmobile.Controller.QuenMatKhauActivity;
 import com.example.svhtcmobile.Model.UserInfo;
 import com.google.gson.JsonObject;
@@ -48,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     TextView tvTen, tvMa, tvChuaDangNhap, tvDangNhap;
 
     LinearLayout llPGV;
-    ImageView ivKhoa, ivAccount , ivLTC, ivHP, ivMonHoc;
+    ImageView ivKhoa, ivAccount , ivLTC, ivHP, ivMonHoc, ivSinhVien, ivGiangVien,ivDoiMatKhau;
     ILoginService iLoginService;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +76,25 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, KhoaController.class));
+            }
+        });
+
+        ivSinhVien.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, MainQuanTriSinhVien.class));
+            }
+        });
+        ivDoiMatKhau.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, DoiMatKhauActivity.class));
+            }
+        });
+        ivGiangVien.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, MainQuanTriGiangVien.class));
             }
         });
         ivLTC.setOnClickListener(new View.OnClickListener() {
@@ -106,6 +128,9 @@ public class MainActivity extends AppCompatActivity {
         ivLTC = findViewById(R.id.ivLTC);
         ivHP=findViewById(R.id.ivHP);
         ivMonHoc=findViewById(R.id.ivMonHoc);
+        ivSinhVien=findViewById(R.id.ivSinhVien);
+        ivGiangVien=findViewById(R.id.ivGiangVien);
+        ivDoiMatKhau=findViewById(R.id.ivDoiMatKhau);
         llPGV = findViewById(R.id.llPGV);
         Retrofit retrofit = ApiClient.getClient("");
         iLoginService = retrofit.create(ILoginService.class);
