@@ -520,6 +520,26 @@
                             android:layout_height="30dp"
                             android:src="@drawable/baseline_table_chart_24" />
                     </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="20dp"
+                        android:background="@drawable/round_back_red"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="CTĐT"
+                            android:textSize="10dp" />
+
+                        <ImageView
+                            android:id="@+id/ivCTDT"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/ctdt" />
+                    </LinearLayout>
                 </LinearLayout>
 
             </LinearLayout>

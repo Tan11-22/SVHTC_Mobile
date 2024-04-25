@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.example.svhtcmobile.Api.ApiClient;
 import com.example.svhtcmobile.Api.apiService.ILoginService;
+import com.example.svhtcmobile.Controller.CTDTController;
 import com.example.svhtcmobile.Controller.DKLopTinChiMain;
 import com.example.svhtcmobile.Controller.DanhSachHeDaoTao;
 import com.example.svhtcmobile.Controller.DanhSachLop;
@@ -63,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
     LinearLayout llGV , llSV, llChuaDN;
     ImageView ivKhoa, ivAccount , ivLTC, ivHP, ivMonHoc, ivSinhVien, ivGiangVien,ivDoiMatKhau,
-            ivHinhAnh,ivHPGV,ivXemDiem, ivNhapDiem, ivLopTinChi, ivLop, ivHe, ivNganh;
+            ivHinhAnh,ivHPGV,ivXemDiem, ivNhapDiem, ivLopTinChi, ivLop, ivHe, ivNganh, ivCTDT;
 
     ILoginService iLoginService;
     @Override
@@ -189,6 +190,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, DanhSachNganh.class));
             }
         });
+
+        ivCTDT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, CTDTController.class));
+            }
+        });
     }
 
     private void setControl() {
@@ -213,6 +221,7 @@ public class MainActivity extends AppCompatActivity {
         ivLop = findViewById(R.id.ivLop);
         ivHe = findViewById(R.id.ivHe);
         ivNganh = findViewById(R.id.ivNganh);
+        ivCTDT = findViewById(R.id.ivCTDT);
         llGV = findViewById(R.id.llGV);
         llSV = findViewById(R.id.llSV);
         llChuaDN = findViewById(R.id.llChuaDN);
