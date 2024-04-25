@@ -19,6 +19,12 @@
             android:name="com.example.svhtcmobile.Controller.KhoaController"
             android:exported="false" />
         <activity
+            android:name="com.example.svhtcmobile.Controller.MainQuanTriMonHoc"
+            android:exported="false" />
+        <activity
+            android:name="com.example.svhtcmobile.Controller.QuenMatKhauActivity"
+            android:exported="false" />
+        <activity
             android:name="com.example.svhtcmobile.Controller.DKLopTinChiMain"
             android:exported="false" />
         <activity

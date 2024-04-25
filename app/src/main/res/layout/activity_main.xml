@@ -217,6 +217,25 @@
                             android:id="@+id/ivHP"
                             />
                     </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:orientation="vertical"
+                        android:background="@drawable/round_back_red"
+                        android:layout_marginLeft="20dp"
+                        android:gravity="center">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="10dp"
+                            android:text="Mon hoc"/>
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/hand"
+                            android:id="@+id/ivMonHoc"
+                            />
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
 

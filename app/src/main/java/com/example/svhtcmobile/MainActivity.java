@@ -27,6 +27,8 @@ import com.example.svhtcmobile.Api.apiService.ILoginService;
 import com.example.svhtcmobile.Controller.DKLopTinChiMain;
 import com.example.svhtcmobile.Controller.HocPhiSinhVienMain;
 import com.example.svhtcmobile.Controller.KhoaController;
+import com.example.svhtcmobile.Controller.MainQuanTriMonHoc;
+import com.example.svhtcmobile.Controller.QuenMatKhauActivity;
 import com.example.svhtcmobile.Model.UserInfo;
 import com.google.gson.JsonObject;
 
@@ -46,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     TextView tvTen, tvMa, tvChuaDangNhap, tvDangNhap;
 
     LinearLayout llPGV;
-    ImageView ivKhoa, ivAccount , ivLTC, ivHP;
+    ImageView ivKhoa, ivAccount , ivLTC, ivHP, ivMonHoc;
     ILoginService iLoginService;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +87,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, HocPhiSinhVienMain.class));
             }
         });
+        ivMonHoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, MainQuanTriMonHoc.class));
+            }
+        });
     }
 
     private void setControl() {
@@ -97,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
         ivAccount = findViewById(R.id.ivAccount);
         ivLTC = findViewById(R.id.ivLTC);
         ivHP=findViewById(R.id.ivHP);
+        ivMonHoc=findViewById(R.id.ivMonHoc);
         llPGV = findViewById(R.id.llPGV);
         Retrofit retrofit = ApiClient.getClient("");
         iLoginService = retrofit.create(ILoginService.class);
@@ -123,7 +132,14 @@ public class MainActivity extends AppCompatActivity {
         EditText edtPassword = dialog.findViewById(R.id.edtPassword);
         ImageView passwordIcon = dialog.findViewById(R.id.passwordIcon);
         Button btnDangNhap = dialog.findViewById(R.id.btnDangNhap);
+        TextView tvQuenMatKhau = dialog.findViewById(R.id.tvQuenMatKhau);
+        tvQuenMatKhau.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, QuenMatKhauActivity.class));
 
+            }
+        });
 
 
         passwordIcon.setOnClickListener(new View.OnClickListener() {
@@ -210,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
         tvMa.setVisibility(View.VISIBLE);
         tvChuaDangNhap.setVisibility(View.GONE);
         tvDangNhap.setText("Đăng xuất");
-        ivDangNhap.setImageResource(R.drawable.logout);
+        ivDangNhap.setImageResource(R.drawable.logout1);
         loginStatus = true;
     }
 
