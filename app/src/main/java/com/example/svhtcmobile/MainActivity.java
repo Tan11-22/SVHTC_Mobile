@@ -22,11 +22,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.example.svhtcmobile.Api.ApiClient;
 import com.example.svhtcmobile.Api.apiService.ILoginService;
 import com.example.svhtcmobile.Controller.DKLopTinChiMain;
+import com.example.svhtcmobile.Controller.DoiMatKhauActivity;
 import com.example.svhtcmobile.Controller.HocPhiSinhVienMain;
 import com.example.svhtcmobile.Controller.KhoaController;
+import com.example.svhtcmobile.Controller.MainQuanTriGiangVien;
+import com.example.svhtcmobile.Controller.MainQuanTriMonHoc;
+import com.example.svhtcmobile.Controller.MainQuanTriSinhVien;
+import com.example.svhtcmobile.Controller.QuenMatKhauActivity;
+import com.example.svhtcmobile.Controller.TaiKhoanController;
 import com.example.svhtcmobile.Model.UserInfo;
 import com.google.gson.JsonObject;
 
@@ -45,8 +52,8 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences accountSharedPref;
     TextView tvTen, tvMa, tvChuaDangNhap, tvDangNhap;
 
-    LinearLayout llPGV;
-    ImageView ivKhoa, ivAccount , ivLTC, ivHP;
+    LinearLayout llGV , llSV;
+    ImageView ivKhoa, ivAccount , ivLTC, ivHP, ivMonHoc, ivSinhVien, ivGiangVien,ivDoiMatKhau;
     ILoginService iLoginService;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +80,25 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, KhoaController.class));
             }
         });
+
+        ivSinhVien.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, MainQuanTriSinhVien.class));
+            }
+        });
+        ivDoiMatKhau.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, DoiMatKhauActivity.class));
+            }
+        });
+        ivGiangVien.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, MainQuanTriGiangVien.class));
+            }
+        });
         ivLTC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,6 +109,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, HocPhiSinhVienMain.class));
+            }
+        });
+        ivMonHoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, MainQuanTriMonHoc.class));
+            }
+        });
+        ivAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, TaiKhoanController.class));
             }
         });
     }
@@ -97,7 +135,12 @@ public class MainActivity extends AppCompatActivity {
         ivAccount = findViewById(R.id.ivAccount);
         ivLTC = findViewById(R.id.ivLTC);
         ivHP=findViewById(R.id.ivHP);
-        llPGV = findViewById(R.id.llPGV);
+        ivMonHoc=findViewById(R.id.ivMonHoc);
+        ivSinhVien=findViewById(R.id.ivSinhVien);
+        ivGiangVien=findViewById(R.id.ivGiangVien);
+        ivDoiMatKhau=findViewById(R.id.ivDoiMatKhau);
+        llGV = findViewById(R.id.llGV);
+        llSV = findViewById(R.id.llSV);
         Retrofit retrofit = ApiClient.getClient("");
         iLoginService = retrofit.create(ILoginService.class);
     }
@@ -123,7 +166,14 @@ public class MainActivity extends AppCompatActivity {
         EditText edtPassword = dialog.findViewById(R.id.edtPassword);
         ImageView passwordIcon = dialog.findViewById(R.id.passwordIcon);
         Button btnDangNhap = dialog.findViewById(R.id.btnDangNhap);
+        TextView tvQuenMatKhau = dialog.findViewById(R.id.tvQuenMatKhau);
+        tvQuenMatKhau.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, QuenMatKhauActivity.class));
 
+            }
+        });
 
 
         passwordIcon.setOnClickListener(new View.OnClickListener() {
@@ -163,7 +213,12 @@ public class MainActivity extends AppCompatActivity {
                                         userInfo = mapJsonObjectToUI(jsonObject);
                                         saveNameAccountandRole(userInfo.getHo(), userInfo.getTen(), userInfo.getTenQuyen());
                                         showInfo(userInfo);
-                                        llPGV.setVisibility(View.VISIBLE);
+                                        if(userInfo.getTenQuyen().equals("GIANGVIEN")){
+                                            llGV.setVisibility(View.VISIBLE);
+                                        } else if (userInfo.getTenQuyen().equals(("SINHVIEN"))){
+                                            llSV.setVisibility(View.VISIBLE);
+                                        }
+
                                     }
 
                                 }
@@ -210,7 +265,7 @@ public class MainActivity extends AppCompatActivity {
         tvMa.setVisibility(View.VISIBLE);
         tvChuaDangNhap.setVisibility(View.GONE);
         tvDangNhap.setText("Đăng xuất");
-        ivDangNhap.setImageResource(R.drawable.logout);
+        ivDangNhap.setImageResource(R.drawable.logout1);
         loginStatus = true;
     }
 
@@ -223,6 +278,11 @@ public class MainActivity extends AppCompatActivity {
         tvChuaDangNhap.setVisibility(View.VISIBLE);
         tvDangNhap.setText("Đăng nhập");
         ivDangNhap.setImageResource(R.drawable.login);
+        if(userInfo.getTenQuyen().equals("GIANGVIEN")) {
+            llGV.setVisibility(View.GONE);
+        } else if(userInfo.getTenQuyen().equals("SINHVIEN")) {
+            llSV.setVisibility(View.GONE);
+        }
         userInfo = null;
     }
 

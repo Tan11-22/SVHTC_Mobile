@@ -20,6 +20,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "SVHTC_Mobile"
+rootProject.name = "SVHTCMobile"
 include(":app")
  
