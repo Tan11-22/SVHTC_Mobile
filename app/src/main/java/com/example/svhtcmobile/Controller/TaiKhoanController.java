@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -38,7 +39,7 @@ public class TaiKhoanController extends AppCompatActivity {
     List<TaiKhoanDTO> dataTaiKhoan = new ArrayList<>();
 
     CustomAdapterTaiKhoan customAdapterTaiKhoan;
-
+    ImageView ivOut;
     Spinner spVaiTro;
 
     @Override
@@ -46,12 +47,23 @@ public class TaiKhoanController extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tai_khoan_controller);
         setControl();
+        setEvent();
+    }
+
+    private void setEvent() {
+        ivOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void setControl() {
         lvTaiKhoan = findViewById(R.id.lvTaiKhoan);
         tvMa = findViewById(R.id.tvMa);
         tvTen = findViewById(R.id.tvTen);
+        ivOut= findViewById(R.id.ivOut);
         spVaiTro = findViewById(R.id.spVaiTro);
         List<String> vaiTros = new ArrayList<>();
         vaiTros.add("1 - Sinh viên");
