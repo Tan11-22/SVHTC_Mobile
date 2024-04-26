@@ -17,9 +17,10 @@ dependencyResolutionManagement {
                 password = "AKCp8jQ8tAahqpT5JjZ4FRP2mW7GMoFZ674kGqHmupTesKeAY2G8NcmPKLuTxTGkKjDLRzDUQ"
             }
         }
+        maven("https://jitpack.io")
     }
 }
 
-rootProject.name = "SVHTC_Mobile"
+rootProject.name = "SVHTCMobile"
 include(":app")
  

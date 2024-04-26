@@ -88,10 +88,7 @@ public class MainQuanTriMonHoc extends AppCompatActivity {
         imgBtnBack.setOnClickListener(view -> finish());
 
         // Xử lý sự kiện khi nhấn nút đăng xuất
-        imgBtnLogout.setOnClickListener(view -> {
-            // Xử lý khi nhấn nút đăng xuất
-            // Ví dụ: Đăng xuất và chuyển sang màn hình đăng nhập
-        });
+        imgBtnLogout.setOnClickListener(view -> finish());
 
         // Xử lý sự kiện khi nhấn nút thêm môn học mới
         btnAddMH.setOnClickListener(view -> {

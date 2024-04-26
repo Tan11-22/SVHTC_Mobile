@@ -316,10 +316,7 @@ public class MainQuanTriGiangVien extends AppCompatActivity {
         imgBtnBack.setOnClickListener(view -> finish());
 
         // Xử lý sự kiện khi nhấn nút đăng xuất
-        imgBtnLogout.setOnClickListener(view -> {
-            // Xử lý khi nhấn nút đăng xuất
-            // Ví dụ: Đăng xuất và chuyển sang màn hình đăng nhập
-        });
+        imgBtnLogout.setOnClickListener(view -> finish());
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

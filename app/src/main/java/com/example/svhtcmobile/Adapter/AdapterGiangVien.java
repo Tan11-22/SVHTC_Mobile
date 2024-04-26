@@ -224,10 +224,10 @@ public class AdapterGiangVien extends ArrayAdapter<GiangVien> {
                 String email = edtEmail.getText().toString();
                 int selectedHocHamId = radioGroupHocHam.getCheckedRadioButtonId();
                 if (selectedHocHamId == R.id.radioButtonPhoGiaoSu) {
-                    hocham = "Phó Giáo Sư";
+                    hocham = "Phó giáo sư";
                 }
                 else if (selectedHocHamId == R.id.radioButtonGiaoSu) {
-                    hocham = "Giáo Sư";
+                    hocham = "Giáo sư";
                 }
                 else hocham = "Không";
                 int selectedHocViId = radioGroupHocVi.getCheckedRadioButtonId();

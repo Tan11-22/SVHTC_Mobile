@@ -1,7 +1,9 @@
 package com.example.svhtcmobile.Adapter;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.text.InputType;
@@ -72,25 +74,41 @@ public class CustomAdapterKhoa extends ArrayAdapter {
         ivXoa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                iLoginService.deleteKhoa(khoa.getMaKhoa()).enqueue(new Callback<Boolean>() {
-                    @Override
-                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                        if(response.code() == 200) {
-                            if(response.body()) {
-                                khoas.remove(position);
-                                notifyDataSetChanged();
-                                Toast.makeText(context,"Xoá khoa "+ khoa.getTenKhoa()+ " thành công!", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(context,"Xoá khoa "+ khoa.getTenKhoa()+ " thất bại!", Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage("Bạn có muốn xoá "+ khoa.getTenKhoa().trim()+" ?")
+                        .setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                iLoginService.deleteKhoa(khoa.getMaKhoa()).enqueue(new Callback<Boolean>() {
+                                    @Override
+                                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                                        if(response.code() == 200) {
+                                            if(response.body()) {
+                                                khoas.remove(position);
+                                                notifyDataSetChanged();
+                                                Toast.makeText(context,"Xoá khoa "+ khoa.getTenKhoa()+ " thành công!", Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                Toast.makeText(context,"Xoá khoa "+ khoa.getTenKhoa()+ " thất bại!", Toast.LENGTH_SHORT).show();
+                                            }
+                                            dialog.dismiss();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<Boolean> call, Throwable throwable) {
+
+                                    }
+                                });
                             }
-                        }
-                    }
+                        }).setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                AlertDialog dialog = builder.create();
+                dialog.show();
 
-                    @Override
-                    public void onFailure(Call<Boolean> call, Throwable throwable) {
-
-                    }
-                });
             }
         });
         return convertView;

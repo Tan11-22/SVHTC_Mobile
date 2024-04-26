@@ -50,6 +50,7 @@ public class KhoaController extends AppCompatActivity {
     TextView tvTen, tvMa;
 
     ImageView ivThemKhoa;
+    ImageView ivOut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +66,12 @@ public class KhoaController extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showDialogAddKhoa();
+            }
+        });
+        ivOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }
@@ -171,6 +178,7 @@ public class KhoaController extends AppCompatActivity {
         lvKhoa = findViewById(R.id.lvKhoa);
         tvMa = findViewById(R.id.tvMa);
         tvTen = findViewById(R.id.tvTen);
+        ivOut= findViewById(R.id.ivOut);
         ivThemKhoa = findViewById(R.id.ivThemKhoa);
         accountSharedPref = getSharedPreferences("Account", Context.MODE_PRIVATE);
         String token = accountSharedPref.getString("token", "");

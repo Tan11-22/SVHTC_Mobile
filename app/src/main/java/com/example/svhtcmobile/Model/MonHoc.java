@@ -3,15 +3,15 @@ package com.example.svhtcmobile.Model;
 import com.google.gson.annotations.SerializedName;
 
 public class MonHoc {
-    @SerializedName("mamh")
+    @SerializedName("MAMH")
     private String maMH;
-    @SerializedName("tenmh")
+    @SerializedName("TENMH")
     private String tenMH;
-    @SerializedName("sotietLt")
+    @SerializedName("SOTIET_LT")
     private int soTietLT;
-    @SerializedName("sotietTh")
+    @SerializedName("SOTIET_TH")
     private int soTietTH;
-    @SerializedName("sotinchi")
+    @SerializedName("SOTINCHI")
     private int soTinChi;
 
     public MonHoc() {

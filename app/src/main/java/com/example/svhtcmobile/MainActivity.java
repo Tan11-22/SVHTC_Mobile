@@ -22,16 +22,27 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.example.svhtcmobile.Api.ApiClient;
 import com.example.svhtcmobile.Api.apiService.ILoginService;
+import com.example.svhtcmobile.Controller.CTDTController;
 import com.example.svhtcmobile.Controller.DKLopTinChiMain;
+import com.example.svhtcmobile.Controller.DanhSachHeDaoTao;
+import com.example.svhtcmobile.Controller.DanhSachLop;
+import com.example.svhtcmobile.Controller.DanhSachLopTinChi;
+import com.example.svhtcmobile.Controller.DanhSachMonHocGV;
+import com.example.svhtcmobile.Controller.DanhSachNganh;
 import com.example.svhtcmobile.Controller.DoiMatKhauActivity;
+import com.example.svhtcmobile.Controller.HocPhiController;
 import com.example.svhtcmobile.Controller.HocPhiSinhVienMain;
 import com.example.svhtcmobile.Controller.KhoaController;
 import com.example.svhtcmobile.Controller.MainQuanTriGiangVien;
 import com.example.svhtcmobile.Controller.MainQuanTriMonHoc;
 import com.example.svhtcmobile.Controller.MainQuanTriSinhVien;
+import com.example.svhtcmobile.Controller.MainThongTinSVGV;
 import com.example.svhtcmobile.Controller.QuenMatKhauActivity;
+import com.example.svhtcmobile.Controller.TaiKhoanController;
+import com.example.svhtcmobile.Controller.XemDiem;
 import com.example.svhtcmobile.Model.UserInfo;
 import com.google.gson.JsonObject;
 
@@ -50,8 +61,11 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences accountSharedPref;
     TextView tvTen, tvMa, tvChuaDangNhap, tvDangNhap;
 
-    LinearLayout llPGV;
-    ImageView ivKhoa, ivAccount , ivLTC, ivHP, ivMonHoc, ivSinhVien, ivGiangVien,ivDoiMatKhau;
+
+    LinearLayout llGV , llSV, llChuaDN;
+    ImageView ivKhoa, ivAccount , ivLTC, ivHP, ivMonHoc, ivSinhVien, ivGiangVien,ivDoiMatKhau,
+            ivHinhAnh,ivHPGV,ivXemDiem, ivNhapDiem, ivLopTinChi, ivLop, ivHe, ivNganh, ivCTDT;
+
     ILoginService iLoginService;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +73,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setControl();
         setEvent();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     private void setEvent() {
@@ -115,6 +134,69 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, MainQuanTriMonHoc.class));
             }
         });
+        ivAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, TaiKhoanController.class));
+            }
+        });
+        ivHinhAnh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(loginStatus){
+                    startActivity(new Intent(MainActivity.this, MainThongTinSVGV.class));
+                }
+            }
+        });
+        ivHPGV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, HocPhiController.class));
+            }
+        });
+        ivXemDiem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, XemDiem.class));
+            }
+        });
+        ivNhapDiem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, DanhSachMonHocGV.class));
+            }
+        });
+        ivLopTinChi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, DanhSachLopTinChi.class));
+            }
+        });
+        ivLop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, DanhSachLop.class));
+            }
+        });
+        ivHe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, DanhSachHeDaoTao.class));
+            }
+        });
+        ivNganh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, DanhSachNganh.class));
+            }
+        });
+
+        ivCTDT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, CTDTController.class));
+            }
+        });
     }
 
     private void setControl() {
@@ -131,7 +213,18 @@ public class MainActivity extends AppCompatActivity {
         ivSinhVien=findViewById(R.id.ivSinhVien);
         ivGiangVien=findViewById(R.id.ivGiangVien);
         ivDoiMatKhau=findViewById(R.id.ivDoiMatKhau);
-        llPGV = findViewById(R.id.llPGV);
+        ivHinhAnh=findViewById(R.id.ivHinhAnh);
+        ivHPGV=findViewById(R.id.ivHPGV);
+        ivXemDiem = findViewById(R.id.ivXemDiem);
+        ivNhapDiem = findViewById(R.id.ivNhapDiem);
+        ivLopTinChi = findViewById(R.id.ivLopTinChi);
+        ivLop = findViewById(R.id.ivLop);
+        ivHe = findViewById(R.id.ivHe);
+        ivNganh = findViewById(R.id.ivNganh);
+        ivCTDT = findViewById(R.id.ivCTDT);
+        llGV = findViewById(R.id.llGV);
+        llSV = findViewById(R.id.llSV);
+        llChuaDN = findViewById(R.id.llChuaDN);
         Retrofit retrofit = ApiClient.getClient("");
         iLoginService = retrofit.create(ILoginService.class);
     }
@@ -204,18 +297,25 @@ public class MainActivity extends AppCompatActivity {
                                         userInfo = mapJsonObjectToUI(jsonObject);
                                         saveNameAccountandRole(userInfo.getHo(), userInfo.getTen(), userInfo.getTenQuyen());
                                         showInfo(userInfo);
-                                        llPGV.setVisibility(View.VISIBLE);
+                                        if(userInfo.getTenQuyen().equals("GIANGVIEN")){
+                                            llGV.setVisibility(View.VISIBLE);
+                                        } else if (userInfo.getTenQuyen().equals(("SINHVIEN"))){
+                                            llSV.setVisibility(View.VISIBLE);
+                                        }
+                                        llChuaDN.setVisibility(View.GONE);
                                     }
 
                                 }
-
                                 @Override
                                 public void onFailure(Call<JsonObject> call, Throwable throwable) {
                                     Toast.makeText(MainActivity.this,"Đăng nhập thất bại!", Toast.LENGTH_SHORT).show();
                                 }
                             });
                             dialog.dismiss();
-                        } else {
+                        } else if(response.code()==400){
+                            Toast.makeText(MainActivity.this,"Tài khoản của bạn không hoạt động!", Toast.LENGTH_SHORT).show();
+                        } else
+                        {
                             Toast.makeText(MainActivity.this,"Đăng nhập thất bại!", Toast.LENGTH_SHORT).show();
 
                         }
@@ -224,7 +324,6 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<JsonObject> call, Throwable throwable) {
                         Toast.makeText(MainActivity.this,"Đăng nhập thất bại!" + throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                        Log.e("loimoivcl", throwable.getMessage());
                     }
                 });
             }
@@ -251,7 +350,7 @@ public class MainActivity extends AppCompatActivity {
         tvMa.setVisibility(View.VISIBLE);
         tvChuaDangNhap.setVisibility(View.GONE);
         tvDangNhap.setText("Đăng xuất");
-        ivDangNhap.setImageResource(R.drawable.logout1);
+        ivDangNhap.setImageResource(R.drawable.logout);
         loginStatus = true;
     }
 
@@ -264,7 +363,14 @@ public class MainActivity extends AppCompatActivity {
         tvChuaDangNhap.setVisibility(View.VISIBLE);
         tvDangNhap.setText("Đăng nhập");
         ivDangNhap.setImageResource(R.drawable.login);
+        if(userInfo.getTenQuyen().equals("GIANGVIEN")) {
+            llGV.setVisibility(View.GONE);
+        } else if(userInfo.getTenQuyen().equals("SINHVIEN")) {
+            llSV.setVisibility(View.GONE);
+        }
+        llChuaDN.setVisibility(View.VISIBLE);
         userInfo = null;
+        clearSharedPref(accountSharedPref);
     }
 
     private void saveTokenAccount(String username, String token){

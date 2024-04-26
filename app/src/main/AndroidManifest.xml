@@ -18,10 +18,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.SVHTC_Mobile"
+        android:theme="@style/Theme.SVHTCMobile"
         tools:targetApi="31">
         <activity
             android:name="com.example.svhtcmobile.Controller.KhoaController"
+            android:exported="false" />
+        <activity
+            android:name="com.example.svhtcmobile.Controller.CTDTController"
+            android:exported="false" />
+        <activity
+            android:name="com.example.svhtcmobile.Controller.HocPhiController"
+            android:exported="false" />
+        <activity
+            android:name="com.example.svhtcmobile.Controller.MainChiTietHocPhi"
+            android:exported="false" />
+        <activity
+            android:name="com.example.svhtcmobile.Controller.MainThongTinSVGV"
+            android:exported="false" />
+        <activity
+            android:name="com.example.svhtcmobile.Controller.MainVeNhaTruong"
+            android:exported="false" />
+        <activity
+            android:name="com.example.svhtcmobile.Controller.TaiKhoanController"
             android:exported="false" />
         <activity
             android:name="com.example.svhtcmobile.Controller.DoiMatKhauActivity"
@@ -46,6 +64,27 @@
             android:exported="false" />
         <activity
             android:name="com.example.svhtcmobile.Controller.ChiTietThanhToanMain"
+            android:exported="false"/>
+        <activity
+            android:name="com.example.svhtcmobile.Controller.XemDiem"
+            android:exported="false"/>
+        <activity
+            android:name="com.example.svhtcmobile.Controller.DanhSachMonHocGV"
+            android:exported="false"/>
+        <activity
+            android:name="com.example.svhtcmobile.Controller.DanhSachSinhVienLTC"
+            android:exported="false"/>
+        <activity
+            android:name="com.example.svhtcmobile.Controller.DanhSachLopTinChi"
+            android:exported="false"/>
+        <activity
+            android:name="com.example.svhtcmobile.Controller.DanhSachLop"
+            android:exported="false"/>
+        <activity
+            android:name="com.example.svhtcmobile.Controller.DanhSachHeDaoTao"
+            android:exported="false"/>
+        <activity
+            android:name="com.example.svhtcmobile.Controller.DanhSachNganh"
             android:exported="false"/>
         <activity
             android:name="com.example.svhtcmobile.MainActivity"

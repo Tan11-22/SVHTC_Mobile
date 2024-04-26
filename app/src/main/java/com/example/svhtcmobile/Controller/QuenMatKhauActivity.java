@@ -78,7 +78,7 @@ public class QuenMatKhauActivity extends AppCompatActivity {
                                 username = responseBody.get("ID").toString();
                                  opt = randomOTP();
                                  sendEmail(email, opt);
-                                Toast.makeText(QuenMatKhauActivity.this, username + "- Email Hợp Lệ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(QuenMatKhauActivity.this, "Email Hợp Lệ", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(QuenMatKhauActivity.this, "Email không tồn tại", Toast.LENGTH_SHORT).show();
                             }
