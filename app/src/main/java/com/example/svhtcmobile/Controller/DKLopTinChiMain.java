@@ -402,6 +402,7 @@ public class DKLopTinChiMain extends AppCompatActivity {
                 all_data.addAll(data);
                 adapter_dkltc.notifyDataSetChanged();
                 adapter_dsDKTenMH.notifyDataSetChanged();
+
             }
 
             @Override
