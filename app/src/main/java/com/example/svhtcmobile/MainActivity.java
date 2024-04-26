@@ -352,6 +352,7 @@ public class MainActivity extends AppCompatActivity {
         tvDangNhap.setText("Đăng xuất");
         ivDangNhap.setImageResource(R.drawable.logout);
         loginStatus = true;
+        ivDoiMatKhau.setVisibility(View.VISIBLE);
     }
 
     private void logout() {
@@ -370,6 +371,7 @@ public class MainActivity extends AppCompatActivity {
         }
         llChuaDN.setVisibility(View.VISIBLE);
         userInfo = null;
+        ivDoiMatKhau.setVisibility(View.GONE);
         clearSharedPref(accountSharedPref);
     }
 

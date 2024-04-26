@@ -15,6 +15,8 @@ public class SinhVien {
     private String email;
 
     private String imgResource;
+
+    private String imgSend;
     public SinhVien()
     {
 
@@ -138,5 +140,40 @@ public class SinhVien {
 
     public void setLop(String lop) {
         this.lop = lop;
+    }
+
+    @Override
+    public String toString() {
+        return "SinhVien{" +
+                "masv='" + masv + '\'' +
+                ", ho='" + ho + '\'' +
+                ", ten='" + ten + '\'' +
+                ", phai=" + phai +
+                ", diachi='" + diachi + '\'' +
+                ", ngaysinh='" + ngaysinh + '\'' +
+                ", malop='" + malop + '\'' +
+                ", lop='" + lop + '\'' +
+                ", danghihoc=" + danghihoc +
+                ", sdt='" + sdt + '\'' +
+                ", hinhanh='" + hinhanh + '\'' +
+                ", email='" + email + '\'' +
+                ", imgResource='" + imgResource + '\'' +
+                '}';
+    }
+
+    public String getImgResource() {
+        return imgResource;
+    }
+
+    public void setImgResource(String imgResource) {
+        this.imgResource = imgResource;
+    }
+
+    public String getImgSend() {
+        return imgSend;
+    }
+
+    public void setImgSend(String imgSend) {
+        this.imgSend = imgSend;
     }
 }
