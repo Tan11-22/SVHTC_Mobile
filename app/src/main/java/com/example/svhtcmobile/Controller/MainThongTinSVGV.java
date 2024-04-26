@@ -169,7 +169,7 @@ public class MainThongTinSVGV extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<String> call, Throwable throwable) {
                         Log.e("checksinhvien", throwable.getMessage());
-                        Toast.makeText(MainThongTinSVGV.this,"Cập nhật thất bại",Toast.LENGTH_SHORT).show();
+                        onResume();
                     }
                 });
             }

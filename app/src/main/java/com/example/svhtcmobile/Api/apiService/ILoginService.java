@@ -2,6 +2,7 @@ package com.example.svhtcmobile.Api.apiService;
 
 import com.example.svhtcmobile.Model.CTDTDTO;
 import com.example.svhtcmobile.Model.Khoa;
+import com.example.svhtcmobile.Model.LopDTO;
 import com.example.svhtcmobile.Model.Nganh;
 import com.example.svhtcmobile.Model.TaiKhoanDTO;
 import com.google.gson.JsonObject;
@@ -57,4 +58,6 @@ public interface ILoginService {
     @GET("auth/get-ctdt")
     Call<List<CTDTDTO>> getCTDT(@Query("ma-lop") String maLop,
                                 @Query("nien-khoa") String nienKhoa);
+    @GET("auth/danh-sach-lop")
+    Call<List<JsonObject>> getDanhSachLop();
 }

@@ -25,6 +25,7 @@ import javax.mail.internet.MimeMessage;
 
 import com.example.svhtcmobile.Api.ApiClient;
 import com.example.svhtcmobile.Api.apiService.IQuanTriThongTin;
+import com.example.svhtcmobile.Model.GiangVien;
 import com.example.svhtcmobile.Model.SinhVien;
 import com.example.svhtcmobile.R;
 import retrofit2.Call;
@@ -70,14 +71,14 @@ public class DoiMatKhauActivity extends AppCompatActivity {
         String token = accountSharedPref.getString("token", "");
         String username = accountSharedPref.getString("username", "");
         String quyen = accountSharedPref.getString("quyen", "");
-        Log.e("Username111",username);
+
         Retrofit retrofit = ApiClient.getClient(token);
         iQuanTriThongTin = retrofit.create(IQuanTriThongTin.class);
-        layEmail(username);
+        layEmail(username,quyen);
         btnLayMa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                otp = ramdomOTP();
+                otp = randomOTP();
                 sendEmail(email,otp);
             }
         });
@@ -101,9 +102,8 @@ public class DoiMatKhauActivity extends AppCompatActivity {
                                     @Override
                                     public void onResponse(Call<Void> call, Response<Void> response) {
                                         if (response.isSuccessful()) {
-//                                            Toast.makeText(DoiMatKhauActivity.this, MK1, Toast.LENGTH_SHORT).show();
-//                                            Intent intent = new Intent(DoiMatKhauActivity.this, MainQuanTriSinhVien.class);
-//                                            startActivity(intent);
+                                            Toast.makeText(DoiMatKhauActivity.this, "Đổi mật khẩu thành công", Toast.LENGTH_SHORT).show();
+//
                                             finish();
                                         } else {
                                             Toast.makeText(DoiMatKhauActivity.this, "Có vấn đề! Mật khẩu chưa được lưu.", Toast.LENGTH_SHORT).show();
@@ -119,23 +119,28 @@ public class DoiMatKhauActivity extends AppCompatActivity {
                                 Toast.makeText(DoiMatKhauActivity.this, "Mã OTP nhập sai!", Toast.LENGTH_SHORT).show();
                         } else
                             Toast.makeText(DoiMatKhauActivity.this, "Mật khẩu mới nhập lại chưa khớp!", Toast.LENGTH_SHORT).show();
-//                    } else
-//                        Toast.makeText(DoiMatKhauActivity.this, "Mật khẩu cũ chưa đúng!", Toast.LENGTH_SHORT).show();
-                }
+                    }
+            }
+        });
+        btnHuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }
-    public String layEmail(String masv)
+    public String layEmail(String masv, String quyen)
     {
 
-
+        if (quyen.equals("SINHVIEN"))
+        {
         iQuanTriThongTin.timSinhVien(masv.trim()).enqueue(new Callback<SinhVien>() {
             @Override
             public void onResponse(Call<SinhVien> call, Response<SinhVien> response) {
                 if (response.isSuccessful()) {
                     SinhVien sinhVien = response.body();
                     email = sinhVien.getEmail();
-                    Toast.makeText(DoiMatKhauActivity.this, email, Toast.LENGTH_SHORT).show();
+
                 } else {
                     Toast.makeText(DoiMatKhauActivity.this, "Có vấn đề!", Toast.LENGTH_SHORT).show();
                 }
@@ -145,7 +150,28 @@ public class DoiMatKhauActivity extends AppCompatActivity {
             public void onFailure(Call<SinhVien> call, Throwable t) {
                 // Xử lý khi có lỗi xảy ra
             }
-        });
+        });}
+
+        else
+        {
+            iQuanTriThongTin.timGiangVien(masv.trim()).enqueue(new Callback<GiangVien>() {
+                @Override
+                public void onResponse(Call<GiangVien> call, Response<GiangVien> response) {
+                    if (response.isSuccessful()) {
+                        GiangVien giangVien = response.body();
+                        email = giangVien.getEmail();
+
+                    } else {
+                        Toast.makeText(DoiMatKhauActivity.this, "Có vấn đề!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<GiangVien> call, Throwable t) {
+                    // Xử lý khi có lỗi xảy ra
+                }
+            });
+        }
         return email;
     }
     public void sendEmail(String email, String OTP) {
@@ -182,11 +208,11 @@ public class DoiMatKhauActivity extends AppCompatActivity {
                 } catch (MessagingException e) {
                     e.printStackTrace();
                     final String errorMessage = e.getMessage(); // Lấy thông điệp lỗi từ exception
-                    Log.e("EmailError", "Failed to send email", e);
+                    Log.e("EmailError", "Gửi mail thất bại!", e);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(DoiMatKhauActivity.this, "Failed to send email: " + errorMessage, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(DoiMatKhauActivity.this, "Gửi mail thất bại!" + errorMessage, Toast.LENGTH_SHORT).show();
 
                         }
                     });
@@ -198,7 +224,7 @@ public class DoiMatKhauActivity extends AppCompatActivity {
 
 
 
-    public static String ramdomOTP() {
+    public static String randomOTP() {
         // Khởi tạo một đối tượng Random
         Random rand = new Random();
 

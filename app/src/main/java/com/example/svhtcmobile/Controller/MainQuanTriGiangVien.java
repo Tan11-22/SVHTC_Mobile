@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -48,7 +49,7 @@ public class MainQuanTriGiangVien extends AppCompatActivity {
     private ImageButton imgBtnBack, imgBtnLogout, btnAddGV;
     private TextView  tvVeNhaTruong, tvXemThongTinCaNhan;
     private ListView lvGiangVienKhoa;
-    private SearchView searchView ;
+//    private SearchView searchView ;
     AdapterGiangVien adapterGV;
     String makhoa ;
     private ImageView ivAnhGV;
@@ -87,21 +88,20 @@ public class MainQuanTriGiangVien extends AppCompatActivity {
         lvGiangVienKhoa.setAdapter(adapterGV);
 
 
-        searchView = findViewById(R.id.searchGV);
-        searchView.clearFocus();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-//                MainQuanTriGiangVien.this.adapterGV.getFilter().filter(query);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                filterByMaGV(newText);
-                return true ;
-            }
-        });
+//        searchView = findViewById(R.id.searchGV);
+//        searchView.clearFocus();
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                adapterGV.filterByMaGV(newText);
+//                return true;
+//            }
+//        });
         iQuanTriThongTin.locMaKhoa().enqueue(new Callback<List<String>>() {
             @Override
             public void onResponse(Call<List<String>> call, Response<List<String>> response) {
@@ -316,10 +316,7 @@ public class MainQuanTriGiangVien extends AppCompatActivity {
         imgBtnBack.setOnClickListener(view -> finish());
 
         // Xử lý sự kiện khi nhấn nút đăng xuất
-        imgBtnLogout.setOnClickListener(view -> {
-            // Xử lý khi nhấn nút đăng xuất
-            // Ví dụ: Đăng xuất và chuyển sang màn hình đăng nhập
-        });
+        imgBtnLogout.setOnClickListener(view -> finish());
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -344,25 +341,5 @@ public class MainQuanTriGiangVien extends AppCompatActivity {
         }
     }
 
-    public void filterByMaGV(String maGV) {
-        if (filteredGiangVienList == null) {
-            filteredGiangVienList = new ArrayList<>();
-        } else {
-            filteredGiangVienList.clear();
-        }
 
-        if (maGV.isEmpty()) {
-            filteredGiangVienList.addAll(DSGV);
-        } else {
-            for (GiangVien gv : DSGV) {
-                if (gv.getMagv().toLowerCase().contains(maGV.toLowerCase())) {
-                    filteredGiangVienList.add(gv);
-                }
-            }
-            Log.e("LISTSEARCH", filteredGiangVienList.toString());
-        }
-
-//        adapterGV.setData(filteredGiangVienList);
-        adapterGV.notifyDataSetChanged();
-    }
 }

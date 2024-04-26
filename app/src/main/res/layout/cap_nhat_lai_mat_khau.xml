@@ -40,6 +40,21 @@
                 android:padding="2dp"
                 android:background="@drawable/bg_white_corner_10_border_gray"
                 android:gravity="center"/>
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textStyle="bold"-->
+<!--                android:text="Tên đăng nhập"-->
+<!--                android:textSize="16dp"-->
+
+<!--                android:id="@+id/tvMKLan1"/>-->
+<!--            <EditText-->
+<!--                android:id="@+id/edtMKLan1"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:padding="2dp"-->
+<!--                android:background="@drawable/bg_white_corner_10_border_gray"-->
+<!--                />-->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -54,6 +69,7 @@
                 android:layout_height="wrap_content"
                 android:padding="2dp"
                 android:background="@drawable/bg_white_corner_10_border_gray"
+                android:inputType="textPassword"
                 />
             <TextView
                 android:layout_width="match_parent"
@@ -61,7 +77,6 @@
                 android:textStyle="bold"
                 android:text="Nhập lại mật khẩu"
                 android:textSize="16dp"
-
                 android:id="@+id/tvMKLan2"/>
             <EditText
                 android:id="@+id/edtMKLan2"
@@ -69,6 +84,8 @@
                 android:layout_height="wrap_content"
                 android:padding="2dp"
                 android:background="@drawable/bg_white_corner_10_border_gray"
+                android:inputType="textPassword"
+
                 />
 
             <LinearLayout

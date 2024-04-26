@@ -24,6 +24,9 @@
             android:name="com.example.svhtcmobile.Controller.KhoaController"
             android:exported="false" />
         <activity
+            android:name="com.example.svhtcmobile.Controller.CTDTController"
+            android:exported="false" />
+        <activity
             android:name="com.example.svhtcmobile.Controller.HocPhiController"
             android:exported="false" />
         <activity
@@ -61,6 +64,27 @@
             android:exported="false" />
         <activity
             android:name="com.example.svhtcmobile.Controller.ChiTietThanhToanMain"
+            android:exported="false"/>
+        <activity
+            android:name="com.example.svhtcmobile.Controller.XemDiem"
+            android:exported="false"/>
+        <activity
+            android:name="com.example.svhtcmobile.Controller.DanhSachMonHocGV"
+            android:exported="false"/>
+        <activity
+            android:name="com.example.svhtcmobile.Controller.DanhSachSinhVienLTC"
+            android:exported="false"/>
+        <activity
+            android:name="com.example.svhtcmobile.Controller.DanhSachLopTinChi"
+            android:exported="false"/>
+        <activity
+            android:name="com.example.svhtcmobile.Controller.DanhSachLop"
+            android:exported="false"/>
+        <activity
+            android:name="com.example.svhtcmobile.Controller.DanhSachHeDaoTao"
+            android:exported="false"/>
+        <activity
+            android:name="com.example.svhtcmobile.Controller.DanhSachNganh"
             android:exported="false"/>
         <activity
             android:name="com.example.svhtcmobile.MainActivity"
