@@ -39,19 +39,20 @@ public class AdapterGiangVien extends ArrayAdapter<GiangVien> {
     private int mResource;
     ArrayAdapter gvAdapter;
     String base64 = "";
-    private List<GiangVien> DStemp;
+
+
     ImageView ivAnhGV;
     IQuanTriThongTin iQuanTriThongTin;
 
     private List<GiangVien> DSGV; // Không cần khai báo danh sách mới ở đây
 
-
+    private List<GiangVien> filteredGiangVienList;
     public AdapterGiangVien(Context context, int resource, List<GiangVien> objects , IQuanTriThongTin iQuanTriThongTin) {
         super(context, resource, objects);
         mContext = context;
         mResource = resource;
         DSGV = objects; // Sử dụng danh sách được truyền vào
-        DStemp = new ArrayList<>(objects);
+        filteredGiangVienList = new ArrayList<>(objects);
         this.iQuanTriThongTin = iQuanTriThongTin;
     }
     @Override
@@ -98,8 +99,8 @@ public class AdapterGiangVien extends ArrayAdapter<GiangVien> {
             public void onClick(View v) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                builder.setTitle("Xác nhận xóa sinh viên");
-                builder.setMessage("Bạn có chắc muốn xóa sinh viên này?");
+                builder.setTitle("Xác nhận xóa giảng viên");
+                builder.setMessage("Bạn có chắc muốn xóa giảng viên này?");
                 builder.setPositiveButton("Xóa", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -280,16 +281,6 @@ public class AdapterGiangVien extends ArrayAdapter<GiangVien> {
             }
         });
 
-//        btnChonAnh.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // Tạo Intent để chọn ảnh từ thư viện
-//                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-//                intent.setType("image/*");
-//                // Gọi startActivityForResult để mở gallery và chọn ảnh
-//                mActivity.startActivityForResult(Intent.createChooser(intent, "Chọn ảnh"), PICK_IMAGE_REQUEST);
-//            }
-//        });
 
     }
     public static void setBase64ImageToImageView(String base64ImageString, ImageView imageView) {
@@ -302,11 +293,21 @@ public class AdapterGiangVien extends ArrayAdapter<GiangVien> {
         // Đặt Bitmap vào ImageView để hiển thị ảnh
         imageView.setImageBitmap(bitmap);
     }
-
-
-    public void setData(List<GiangVien> filteredGiangVienList) {
-        this.DSGV.clear();
-        this.DSGV.addAll(filteredGiangVienList);
-        notifyDataSetChanged();
-    }
+//    public void filterByMaGV(String maGV) {
+//        filteredGiangVienList.clear(); // Xóa danh sách giáo viên đã lọc
+//
+//        if (maGV.isEmpty()) { // Nếu mã giáo viên rỗng, hiển thị tất cả giáo viên
+//            filteredGiangVienList.addAll(DSGV);
+//        } else {
+//            String lowerCaseQuery = maGV.toLowerCase(); // Chuyển đổi mã giáo viên sang chữ thường
+//
+//            // Lọc danh sách giáo viên gốc để chỉ chứa các giáo viên có mã giáo viên chứa maGV
+//            for (GiangVien gv : DSGV) {
+//                if (gv.getMagv().toLowerCase().contains(lowerCaseQuery)) {
+//                    filteredGiangVienList.add(gv);
+//                }
+//            }
+//        }
+//        notifyDataSetChanged(); // Thông báo cho ListView cập nhật dữ liệu
+//    }
 }

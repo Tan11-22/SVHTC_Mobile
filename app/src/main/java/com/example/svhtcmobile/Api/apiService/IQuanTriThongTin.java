@@ -47,6 +47,8 @@ public interface IQuanTriThongTin {
     Call<Void> doiMatKhau(@Query("username") String username,@Query("password") String password);
     @POST("sinh-vien/encode-ten-anh")
     Call<Map<String,String>> encodeTenAnh(@Query("ten-anh") String tenanh);
+    @GET("sinh-vien/tai-khoan-by-email")
+    Call<Map<String, Object>> taiKhoanByEmail(@Query("Email") String Email);
 
     @GET("giang-vien/tim-giang-vien")
     Call<GiangVien> timGiangVien(@Query("ma-gv") String magv);

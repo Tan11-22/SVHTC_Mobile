@@ -241,7 +241,7 @@
                             <ImageView
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
-                                android:src="@drawable/hand"
+                                android:src="@drawable/monhoc"
                                 android:id="@+id/ivMonHoc"
                                 />
                         </LinearLayout>
@@ -260,7 +260,7 @@
                             <ImageView
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
-                                android:src="@drawable/hand"
+                                android:src="@drawable/sinhvien"
                                 android:id="@+id/ivSinhVien"
                                 />
                         </LinearLayout>
@@ -279,7 +279,7 @@
                             <ImageView
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
-                                android:src="@drawable/hand"
+                                android:src="@drawable/giangvien"
                                 android:id="@+id/ivGiangVien"
                                 />
                         </LinearLayout>
@@ -298,7 +298,7 @@
                             <ImageView
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
-                                android:src="@drawable/hand"
+                                android:src="@drawable/baseline_lock_reset_24"
                                 android:id="@+id/ivDoiMatKhau"
                                 />
                         </LinearLayout>

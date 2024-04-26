@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
 
@@ -43,7 +44,7 @@ public class QuenMatKhauActivity extends AppCompatActivity {
     String opt;
     String email;
 
-
+    String username;
 
     IQuanTriThongTin iQuanTriThongTin;
 
@@ -68,8 +69,38 @@ public class QuenMatKhauActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 email = edtEmailKhoiPhuc.getText().toString();
-                opt = ramdomOTP();
-                sendEmail(email,opt);
+                iQuanTriThongTin.taiKhoanByEmail(email).enqueue(new Callback<Map<String, Object>>() {
+                    @Override
+                    public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
+                        if (response.isSuccessful()) {
+                            Map<String, Object> responseBody = response.body();
+                            if (responseBody != null && responseBody.containsKey("ID")) {
+                                username = responseBody.get("ID").toString();
+                                 opt = randomOTP();
+                                 sendEmail(email, opt);
+                                Toast.makeText(QuenMatKhauActivity.this, username + "- Email Hợp Lệ", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(QuenMatKhauActivity.this, "Email không tồn tại", Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(QuenMatKhauActivity.this, "Có lỗi xảy ra khi kiểm tra email!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Map<String, Object>> call, Throwable t) {
+                        // Xử lý khi có lỗi xảy ra
+                        Log.e("checkloiquenpass", t.getMessage());
+                        Toast.makeText(QuenMatKhauActivity.this, "Có lỗi xảy ra khi kiểm tra email!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
+        btnHuyKP.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }
@@ -125,7 +156,7 @@ public class QuenMatKhauActivity extends AppCompatActivity {
 
 
 
-    public static String ramdomOTP() {
+    public static String randomOTP() {
         // Khởi tạo một đối tượng Random
         Random rand = new Random();
 
@@ -161,7 +192,7 @@ public class QuenMatKhauActivity extends AppCompatActivity {
                 if (edtOTP.getText().toString().equals(opt)) {
                     if (newPassword.equals(confirmPassword)) {
 
-                        iQuanTriThongTin.quenMatKhau(email,newPassword).enqueue(new Callback<Void>() {
+                        iQuanTriThongTin.doiMatKhau(username,newPassword).enqueue(new Callback<Void>() {
                             @Override
                             public void onResponse(Call<Void> call, Response<Void> response) {
                                 if (response.isSuccessful()) {

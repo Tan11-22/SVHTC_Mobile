@@ -67,11 +67,8 @@ public class MainQuanTriMonHoc extends AppCompatActivity {
             public void onResponse(Call<List<MonHoc>> call, Response<List<MonHoc>> response) {
                 if (response.isSuccessful() && response.body() != null) {
 
+
                     danhSachMonHoc.addAll(response.body());
-                    Log.d("monhoc", String.valueOf(danhSachMonHoc.size()));
-                    for (MonHoc mh: danhSachMonHoc){
-                        Log.d("monhoc", String.valueOf(mh.getTenMH()));
-                    }
                     adapter = new AdapterMonHoc(MainQuanTriMonHoc.this, R.layout.mon_hoc_item, danhSachMonHoc,iQuanTriThongTin);
                     lvMonHoc.setAdapter(adapter);
                     Log.e("API Response", "Success: " + response.message());
@@ -170,10 +167,7 @@ public class MainQuanTriMonHoc extends AppCompatActivity {
                                 // Xử lý khi có lỗi xảy ra
                             }
                         });
-
-
                     }
-//                    else Toast.makeText(getApplicationContext(), "Mã môn học đã tồn tại!", Toast.LENGTH_SHORT).show();
                 }
 
             });
