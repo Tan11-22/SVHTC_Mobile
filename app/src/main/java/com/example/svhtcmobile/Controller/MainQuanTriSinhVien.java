@@ -198,7 +198,8 @@ public class MainQuanTriSinhVien extends AppCompatActivity {
                     if (genderValue == 1) phaiSV = true;
                     else phaiSV = false;// 1: Nữ, 0: Nam
                     if (check == true) {
-                        SinhVien sv = new SinhVien(maSV, hoSV, tenSV, phaiSV, ngaySinh, diaChiSV, maLop,  false,sdtSV,base64String,maSV.trim()+"@student.ptithcm.edu.vn");
+                        Log.e("adddffd",base64String);
+                        SinhVien sv = new SinhVien(maSV, hoSV, tenSV, phaiSV,  diaChiSV,ngaySinh, maLop,  false,sdtSV,base64String,maSV.trim()+"@student.ptithcm.edu.vn");
 
 
                         iQuanTriThongTin.themSinhVien(sv).enqueue(new Callback<Void>() {
