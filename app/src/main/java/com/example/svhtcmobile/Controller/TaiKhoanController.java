@@ -100,7 +100,7 @@ public class TaiKhoanController extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<List<TaiKhoanDTO>> call, Throwable throwable) {
-
+Log.e("uygh",throwable.getMessage());
                     }
                 });
             }

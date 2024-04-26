@@ -54,6 +54,7 @@
                 android:layout_height="wrap_content"
                 android:padding="2dp"
                 android:background="@drawable/bg_white_corner_10_border_gray"
+                android:inputType="textPassword"
                 />
             <TextView
                 android:layout_width="match_parent"
@@ -69,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:padding="2dp"
                 android:background="@drawable/bg_white_corner_10_border_gray"
-                />
+                android:inputType="textPassword"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

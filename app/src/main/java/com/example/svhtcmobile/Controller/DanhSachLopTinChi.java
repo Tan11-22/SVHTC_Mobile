@@ -69,7 +69,6 @@ public class DanhSachLopTinChi extends AppCompatActivity {
         setAdapterSpLocTheo();
         setEvent();
         DocDuLieuLTC();
-
     }
 
     private void setEvent() {
@@ -106,6 +105,7 @@ public class DanhSachLopTinChi extends AppCompatActivity {
                             if(response.code() == 200){
                                 data_spDkLoc.addAll(response.body());
                                 setAdapterSpDkLoc();
+//                                DocDuLieuLTC();
                             }
                         }
 
@@ -129,6 +129,7 @@ public class DanhSachLopTinChi extends AppCompatActivity {
         spDkLoc.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
                 locDL();
                 setAdapterLTC();
             }
