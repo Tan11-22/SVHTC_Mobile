@@ -8,6 +8,7 @@ import java.util.List;
 import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -29,7 +30,6 @@ public interface IThongKe {
     @GET("sinhvien/{id}")
     Call<SinhVien> getSinhVienById(@Path("id") String masv);
 
-    @Multipart
-    @POST("/upload")
-    Call<ResponseBody> uploadFile(@Part MultipartBody.Part file);
+    @POST("sinhvien/update")
+    Call<String> updateSinhVien(@Body SinhVien sinhVien);
 }

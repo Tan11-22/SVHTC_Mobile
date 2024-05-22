@@ -53,6 +53,12 @@
                 android:gravity="center"
                 android:text="Nợ"
                 />
+            <ImageView
+                android:id="@+id/ivXuatPDF"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_picture_as_pdf_24"
+                />
         </TableRow>
     </TableLayout>
 

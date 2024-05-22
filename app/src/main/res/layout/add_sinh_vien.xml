@@ -191,6 +191,13 @@
                 android:src="@drawable/baseline_photo_size_select_actual_24"
                 android:contentDescription="Chọn ảnh"/>
 
+            <ImageButton
+                android:id="@+id/btnCapture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_photo_camera_24"
+                android:contentDescription="Chụp ảnh"/>
+
         </LinearLayout>
 
 

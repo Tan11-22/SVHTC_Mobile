@@ -1,8 +1,11 @@
 package com.example.svhtcmobile.Controller;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,23 +25,31 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import static android.provider.MediaStore.ACTION_IMAGE_CAPTURE;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.example.svhtcmobile.Adapter.AdapterSinhVien;
 import com.example.svhtcmobile.Api.ApiClient;
 import com.example.svhtcmobile.Api.apiService.IQuanTriThongTin;
 import com.example.svhtcmobile.Model.SinhVien;
 import com.example.svhtcmobile.R;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -58,7 +69,10 @@ public class MainQuanTriSinhVien extends AppCompatActivity {
     List<SinhVien> DSSV = new ArrayList<>();
     Spinner spLop;
 
-    String base64String;
+//    String base64String;
+
+    Bitmap photo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,10 +126,7 @@ public class MainQuanTriSinhVien extends AppCompatActivity {
         imgBtnBack.setOnClickListener(view -> finish());
 
         // Xử lý sự kiện khi nhấn nút đăng xuất
-        imgBtnLogout.setOnClickListener(view -> {
-            // Xử lý khi nhấn nút đăng xuất
-            // Ví dụ: Đăng xuất và chuyển sang màn hình đăng nhập
-        });
+        imgBtnLogout.setOnClickListener(view -> finish());
 
         // Xử lý sự kiện khi nhấn vào nút thêm sinh viên mới
         btnAddSV.setOnClickListener(view -> {
@@ -135,6 +146,8 @@ public class MainQuanTriSinhVien extends AppCompatActivity {
 
             ImageButton btnChonAnh = dialogView.findViewById(R.id.btnChonAnh);
 
+            ImageButton btnCapture = dialogView.findViewById(R.id.btnCapture);
+
 
             btnChonAnh.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -142,6 +155,18 @@ public class MainQuanTriSinhVien extends AppCompatActivity {
                     Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                     intent.setType("image/*");
                     startActivityForResult(intent, PICK_IMAGE_REQUEST);
+                }
+            });
+
+            btnCapture.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent cameraIntent = new Intent(ACTION_IMAGE_CAPTURE);
+                    if(ActivityCompat.checkSelfPermission(MainQuanTriSinhVien.this, Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED){
+                        ActivityCompat.requestPermissions(MainQuanTriSinhVien.this, new String[]{Manifest.permission.CAMERA},1);
+                        return;
+                    }
+                    startActivityForResult(cameraIntent,99);
                 }
             });
 
@@ -201,48 +226,41 @@ public class MainQuanTriSinhVien extends AppCompatActivity {
                     if (genderValue == 1) phaiSV = true;
                     else phaiSV = false;// 1: Nữ, 0: Nam
                     if (check == true) {
-                        SinhVien sv = new SinhVien(maSV, hoSV, tenSV, phaiSV, ngaySinh, diaChiSV, maLop,  false,sdtSV,base64String,maSV.trim()+"@student.ptithcm.edu.vn");
-
-
-                        iQuanTriThongTin.themSinhVien(sv).enqueue(new Callback<Void>() {
+                        SinhVien sv = new SinhVien(maSV, hoSV, tenSV, phaiSV,  diaChiSV,ngaySinh, maLop,  false,sdtSV,maSV,maSV.trim()+"@student.ptithcm.edu.vn");
+                        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                        photo.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                        byte[] byteArray = byteArrayOutputStream.toByteArray();
+                        RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), byteArray);
+                        MultipartBody.Part in = MultipartBody.Part.createFormData("img", "", requestBody);
+                        Gson gson = new Gson();
+                        String dataSV = gson.toJson(sv);
+                        RequestBody sv1 = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), dataSV);
+                        Log.d("Tanlog", dataSV);
+                        iQuanTriThongTin.themSinhVien(sv1,in).enqueue(new Callback<JsonObject>() {
                             @Override
-                            public void onResponse(Call<Void> call, Response<Void> response) {
-                                if (response.isSuccessful()) {
+                            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                                JsonObject jsOb= response.body();
+                                if (response.code() == 200) {
 
-                                    iQuanTriThongTin.timSinhVien(sv.getMasv()).enqueue(new Callback<SinhVien>() {
-                                        @Override
-                                        public void onResponse(Call<SinhVien> call, Response<SinhVien> response) {
-                                            if (response.isSuccessful()) {
-                                                SinhVien sinhVien = response.body();
-                                                 sv.setHinhanh(sinhVien.getHinhanh());
-
-                                            } else {
-                                                Toast.makeText(MainQuanTriSinhVien.this, "Có vấn đề!", Toast.LENGTH_SHORT).show();
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onFailure(Call<SinhVien> call, Throwable t) {
-                                            // Xử lý khi có lỗi xảy ra
-                                        }
-                                    });
-
+                                    sv.setHinhanh(jsOb.get("filename").getAsString());
                                     DSSV.add(sv);
 
                                     adapterSV.notifyDataSetChanged();
                                     Toast.makeText(getApplicationContext(), "Thêm thành công!", Toast.LENGTH_SHORT).show();
+                                    dialog.dismiss();
                                 } else {
-                                    Toast.makeText(getApplicationContext(), "Thêm không thành công!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), "Thêm không thành công! ERROR: "+jsOb.get("status").getAsString(), Toast.LENGTH_SHORT).show();
                                 }
                             }
 
                             @Override
-                            public void onFailure(Call<Void> call, Throwable t) {
+                            public void onFailure(Call<JsonObject> call, Throwable t) {
                                 // Xử lý khi có lỗi xảy ra
+                                Log.d("Tanlog", t.getMessage());
                             }
                         });
 
-                        dialog.dismiss();
+
 
                     }
                     else Toast.makeText(getApplicationContext(), "Mã sinh viên đã tồn tại!", Toast.LENGTH_SHORT).show();
@@ -258,6 +276,8 @@ public class MainQuanTriSinhVien extends AppCompatActivity {
                     dialog.dismiss();
                 }
             });
+
+
         });
 
         // Xử lý sự kiện khi nhấn vào nút "Về nhà trường"
@@ -323,19 +343,24 @@ public class MainQuanTriSinhVien extends AppCompatActivity {
             Uri uri = data.getData();
             try {
 
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                photo = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
                 // Tìm ImageView trong dialogView
                 if (ivAnhSinhVien != null) {
                     // Gán ảnh vào ImageView
-                    ivAnhSinhVien.setImageBitmap(bitmap);
-                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-                    byte[] byteArray = byteArrayOutputStream.toByteArray();
-                    base64String = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                    ivAnhSinhVien.setImageBitmap(photo);
+//                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//                    photo.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+//                    byte[] byteArray = byteArrayOutputStream.toByteArray();
+//                    base64String = Base64.encodeToString(byteArray, Base64.DEFAULT);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+
+        if( requestCode == 99 && resultCode == Activity.RESULT_OK) {
+            photo = (Bitmap) data.getExtras().get("data");
+            ivAnhSinhVien.setImageBitmap(photo);
         }
     }
 
