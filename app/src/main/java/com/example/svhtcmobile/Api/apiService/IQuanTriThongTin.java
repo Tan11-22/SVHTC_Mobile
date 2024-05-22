@@ -4,14 +4,20 @@ import com.example.svhtcmobile.Model.GiangVien;
 import com.example.svhtcmobile.Model.Lop;
 import com.example.svhtcmobile.Model.MonHoc;
 import com.example.svhtcmobile.Model.SinhVien;
+import com.google.gson.JsonObject;
 
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 import retrofit2.http.Query;
 
 public interface IQuanTriThongTin {
@@ -23,8 +29,11 @@ public interface IQuanTriThongTin {
     Call<List<String>> locMaLop();
     @GET("sinh-vien/danh-sach-sv-lop")
     Call<List<SinhVien>> listSVByMaLop(@Query("ma-lop") String malop);
+
+    @Multipart
     @POST("sinh-vien/them-sinh-vien-moi")
-    Call<Void> themSinhVien(@Body SinhVien sinhVien);
+    Call<JsonObject> themSinhVien(@Part("sv") RequestBody sinhVien,
+                                  @Part MultipartBody.Part filePart);
     @POST("sinh-vien/update-sinh-vien")
     Call<Void> updateSinhVien(@Body SinhVien sinhVien);
     @POST("sinh-vien/xoa-sinh-vien")
@@ -57,8 +66,10 @@ public interface IQuanTriThongTin {
     Call<List<String>> locMaKhoa();
     @GET("giang-vien/danh-sach-gv-khoa")
     Call<List<GiangVien>> listGVByMaKhoa(@Query("ma-khoa") String makhoa);
+    @Multipart
     @POST("giang-vien/them-giang-vien-moi")
-    Call<Void> themGiangVien(@Body GiangVien giangVien);
+    Call<JsonObject> themGiangVien(@Part("gv") RequestBody giangVien,
+                             @Part MultipartBody.Part filePart);
     @POST("giang-vien/update-giang-vien")
     Call<Void> updateGiangVien(@Body GiangVien giangVien);
     @POST("giang-vien/xoa-giang-vien")

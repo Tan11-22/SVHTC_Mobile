@@ -163,7 +163,7 @@ public class MainThongTinSVGV extends AppCompatActivity {
                 iThongKe.updateSinhVien(sinhVien).enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
-                        Toast.makeText(MainThongTinSVGV.this,response.body(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainThongTinSVGV.this,"Cap nhat thanh cong",Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

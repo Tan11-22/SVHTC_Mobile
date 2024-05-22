@@ -1,8 +1,13 @@
 package com.example.svhtcmobile.Controller;
 
+import static android.provider.MediaStore.ACTION_IMAGE_CAPTURE;
+
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,18 +31,24 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.app.ActivityCompat;
 
 import com.example.svhtcmobile.Adapter.AdapterGiangVien;
 import com.example.svhtcmobile.Api.ApiClient;
 import com.example.svhtcmobile.Api.apiService.IQuanTriThongTin;
 import com.example.svhtcmobile.Model.GiangVien;
 import com.example.svhtcmobile.R;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -60,6 +71,8 @@ public class MainQuanTriGiangVien extends AppCompatActivity {
     String base64String;
     SharedPreferences accountSharedPref;
     IQuanTriThongTin iQuanTriThongTin;
+
+    Bitmap photo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -179,6 +192,7 @@ public class MainQuanTriGiangVien extends AppCompatActivity {
             Button btnLuu = dialogView.findViewById(R.id.btnLuuGV);
 
             ImageButton btnChonAnh = dialogView.findViewById(R.id.btnChonAnhGV);
+            ImageButton btnCapture = dialogView.findViewById(R.id.btnCapture);
 
 
             btnChonAnh.setOnClickListener(new View.OnClickListener() {
@@ -187,6 +201,18 @@ public class MainQuanTriGiangVien extends AppCompatActivity {
                     Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                     intent.setType("image/*");
                     startActivityForResult(intent, PICK_IMAGE_REQUEST);
+                }
+            });
+
+            btnCapture.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent cameraIntent = new Intent(ACTION_IMAGE_CAPTURE);
+                    if(ActivityCompat.checkSelfPermission(MainQuanTriGiangVien.this, Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED){
+                        ActivityCompat.requestPermissions(MainQuanTriGiangVien.this, new String[]{Manifest.permission.CAMERA},1);
+                        return;
+                    }
+                    startActivityForResult(cameraIntent,99);
                 }
             });
 
@@ -242,48 +268,41 @@ public class MainQuanTriGiangVien extends AppCompatActivity {
                     else hocvi = "Tiến sĩ Khoa Học";
 
                     if (check == true) {
-                        GiangVien gv = new GiangVien(magv, ho, ten, hocham,hocvi,chuyenmon, sdt, base64String,magv.trim()+"@.ptithcm.edu.vn",maKhoa1);
+                        GiangVien gv = new GiangVien(magv, ho, ten, hocham,hocvi,chuyenmon, sdt, magv,magv.trim()+"@.ptithcm.edu.vn",maKhoa1);
+                        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                        photo.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                        byte[] byteArray = byteArrayOutputStream.toByteArray();
+                        RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), byteArray);
+                        MultipartBody.Part in = MultipartBody.Part.createFormData("img", "", requestBody);
+                        Gson gson = new Gson();
+                        String dataGV = gson.toJson(gv);
+                        RequestBody gv1 = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), dataGV);
+                        Log.d("mylog", dataGV);
 
-
-                        iQuanTriThongTin.themGiangVien(gv).enqueue(new Callback<Void>() {
+                        iQuanTriThongTin.themGiangVien(gv1,in).enqueue(new Callback<JsonObject>() {
                             @Override
-                            public void onResponse(Call<Void> call, Response<Void> response) {
-                                if (response.isSuccessful()) {
+                            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                                JsonObject jsOb= response.body();
+                                if (response.code() == 200) {
 
-                                    iQuanTriThongTin.timGiangVien(magv).enqueue(new Callback<GiangVien>() {
-                                        @Override
-                                        public void onResponse(Call<GiangVien> call, Response<GiangVien> response) {
-                                            if (response.isSuccessful()) {
-                                                GiangVien giangVien = response.body();
-                                                gv.setHinhanh(giangVien.getHinhanh());
-
-                                            } else {
-                                                Toast.makeText(MainQuanTriGiangVien.this, "Có vấn đề!", Toast.LENGTH_SHORT).show();
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onFailure(Call<GiangVien> call, Throwable t) {
-                                            // Xử lý khi có lỗi xảy ra
-                                        }
-                                    });
-
+                                    gv.setHinhanh(jsOb.get("filename").getAsString());
                                     DSGV.add(gv);
 
                                     adapterGV.notifyDataSetChanged();
                                     Toast.makeText(getApplicationContext(), "Thêm thành công!", Toast.LENGTH_SHORT).show();
-                                } else {
+                                    dialog.dismiss();}
+                                else {
                                     Toast.makeText(getApplicationContext(), "Thêm không thành công!", Toast.LENGTH_SHORT).show();
                                 }
                             }
 
                             @Override
-                            public void onFailure(Call<Void> call, Throwable t) {
+                            public void onFailure(Call<JsonObject> call, Throwable t) {
                                 // Xử lý khi có lỗi xảy ra
+                                Log.d("mylog", t.getMessage());
                             }
                         });
 
-                        dialog.dismiss();
 
                     }
                     else Toast.makeText(getApplicationContext(), "Mã giảng viên đã tồn tại!", Toast.LENGTH_SHORT).show();
@@ -325,19 +344,23 @@ public class MainQuanTriGiangVien extends AppCompatActivity {
             Uri uri = data.getData();
             try {
 
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                photo = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
                 // Tìm ImageView trong dialogView
                 if (ivAnhGV != null) {
                     // Gán ảnh vào ImageView
-                    ivAnhGV.setImageBitmap(bitmap);
-                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-                    byte[] byteArray = byteArrayOutputStream.toByteArray();
-                    base64String = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                    ivAnhGV.setImageBitmap(photo);
+//                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+//                    byte[] byteArray = byteArrayOutputStream.toByteArray();
+//                    base64String = Base64.encodeToString(byteArray, Base64.DEFAULT);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+        if( requestCode == 99 && resultCode == Activity.RESULT_OK) {
+            photo = (Bitmap) data.getExtras().get("data");
+            ivAnhGV.setImageBitmap(photo);
         }
     }
 

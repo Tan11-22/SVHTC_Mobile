@@ -120,7 +120,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
 
 
         <Spinner
@@ -143,30 +144,42 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="horizontal">
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
 
         <Button
             android:id="@+id/btnXemDs"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="0.5"
             android:gravity="center"
             android:text="Danh sách"
+            android:backgroundTint="@color/primary"
             android:textSize="10dp" />
 
         <Button
             android:id="@+id/btnThongKe"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="0.5"
             android:gravity="center"
             android:text="Thống kê"
-            android:textSize="11dp" />
+            android:textSize="11dp"
+            android:layout_marginLeft="20dp"
+            android:backgroundTint="@color/primary"/>
+        <Button
+            android:id="@+id/btnXuatPDF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:gravity="center"
+            android:text="Xuất PDF"
+            android:textSize="11dp"
+            android:backgroundTint="@color/primary"/>
 
     </LinearLayout>
 

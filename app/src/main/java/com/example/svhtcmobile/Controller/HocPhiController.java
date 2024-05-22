@@ -1,10 +1,13 @@
 package com.example.svhtcmobile.Controller;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,6 +15,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,7 +45,7 @@ public class HocPhiController extends AppCompatActivity {
 
     private Spinner spDslop, spNienKhoa, spHocKy;
     private ListView lvDanhSachHocPhi;
-    private Button btnXemDs, btnThongKe;
+    private Button btnXemDs, btnThongKe, btnXuatPDF;
     private LinearLayout llDanhSachHocPhi;
     private PieChart chartDanhSachHocPhi;
     private DanhSachHocPhiLopAdapter danhSachHocPhiLopAdapter;
@@ -78,6 +82,7 @@ public class HocPhiController extends AppCompatActivity {
         llDanhSachHocPhi = findViewById(R.id.llDanhSachHocPhi);
         chartDanhSachHocPhi = findViewById(R.id.chartDanhSach);
         btnThongKe = findViewById(R.id.btnThongKe);
+        btnXuatPDF = findViewById(R.id.btnXuatPDF);
 
         accountSharedPref = getSharedPreferences("Account", Context.MODE_PRIVATE);
         String token = accountSharedPref.getString("token", "");
@@ -128,6 +133,56 @@ public class HocPhiController extends AppCompatActivity {
                 Intent intent = new Intent(HocPhiController.this, MainChiTietHocPhi.class);
                 intent.putExtra("hocphi",danhSachHocPhiLop);
                 startActivity(intent);
+            }
+        });
+        btnXuatPDF.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String lop = spDslop.getSelectedItem().toString();
+                String nienkhoa = spNienKhoa.getSelectedItem().toString();
+                int hocky = Integer.parseInt(spHocKy.getSelectedItem().toString());
+                ApiClient.askPermissions(HocPhiController.this);
+                String fileName = "hoc_phi_"+lop+"_"+nienkhoa+"_"+String.valueOf(hocky)+".pdf";
+                View view = LayoutInflater.from(HocPhiController.this).inflate(R.layout.layout_pdf_thong_ke_hoc_phi,null);
+                PieChart chartPDF = view.findViewById(R.id.chartDanhSachPDF2);
+                ListView lvDanhSachHocPhi1 = view.findViewById(R.id.lvDanhSachHocPhi);
+                TextView tvLop = view.findViewById(R.id.tvLop);
+                TextView tvNienKhoa = view.findViewById(R.id.tvNienKhoa);
+                TextView tvHocKy = view.findViewById(R.id.tvHocKy);
+                tvLop.setText(tvLop.getText().toString()+ " "+ lop);
+                tvNienKhoa.setText(tvNienKhoa.getText().toString()+ " "+ nienkhoa);
+                tvHocKy.setText(tvHocKy.getText().toString()+ " "+ String.valueOf(hocky));
+                iThongKe.getDanhSachHocPhiTheoLop(lop, nienkhoa, hocky).enqueue(new Callback<List<DanhSachHocPhiLop>>() {
+                    @Override
+                    public void onResponse(Call<List<DanhSachHocPhiLop>> call, Response<List<DanhSachHocPhiLop>> response) {
+                        if (response.code() == 204) {
+                            Toast.makeText(HocPhiController.this, "Không có dữ liệu", Toast.LENGTH_SHORT).show();
+                        } else {
+                            lvDanhSachHocPhi1.setVisibility(View.VISIBLE);
+                            data = response.body();
+                            danhSachHocPhiLopAdapter = new DanhSachHocPhiLopAdapter(HocPhiController.this, R.layout.layout_item_hocphi_sv, data);
+                            lvDanhSachHocPhi1.setAdapter(danhSachHocPhiLopAdapter);
+                            List<PieEntry> entries = getPieEntry(data);
+                            PieDataSet dataSet = new PieDataSet(entries, "Danh sách học phí");
+                            dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+
+                            PieData data = new PieData(dataSet);
+                            chartPDF.setData(data);
+                            Description description = new Description();
+                            description.setText("Biểu đồ học phí");
+                            description.setTextAlign(Paint.Align.CENTER);
+                            chartPDF.setDescription(description);
+
+                            chartPDF.invalidate();
+                            ApiClient.convertXMLToPDF(HocPhiController.this,view,fileName);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<DanhSachHocPhiLop>> call, Throwable throwable) {
+                        Toast.makeText(HocPhiController.this, "Lấy dữ liệu học phí thất bại", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
     }

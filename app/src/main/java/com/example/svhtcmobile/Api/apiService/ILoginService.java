@@ -60,4 +60,10 @@ public interface ILoginService {
                                 @Query("nien-khoa") String nienKhoa);
     @GET("auth/danh-sach-lop")
     Call<List<JsonObject>> getDanhSachLop();
+
+    @POST("auth/find-danh-sach-cthp")
+    Call<List<JsonObject>> getDanhSachCTHP(@Query("masv") String maSV,
+                                           @Query("nienkhoa") String nienKhoa,
+                                           @Query("hocky") int hocKy);
+
 }

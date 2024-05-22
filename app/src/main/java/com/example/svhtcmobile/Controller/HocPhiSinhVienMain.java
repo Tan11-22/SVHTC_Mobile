@@ -124,7 +124,7 @@ public class HocPhiSinhVienMain extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<HocPhiHocKy>> call, retrofit2.Response<List<HocPhiHocKy>> response) {
                 data.clear();
-                Toast.makeText(HocPhiSinhVienMain.this,"Call api hphk success",Toast.LENGTH_SHORT).show();
+//                Toast.makeText(HocPhiSinhVienMain.this,"Call api hphk success",Toast.LENGTH_SHORT).show();
                 int tongTienHocPhi=0;
                 for (HocPhiHocKy x: response.body()){
                     data.add(x);
@@ -148,7 +148,7 @@ public class HocPhiSinhVienMain extends AppCompatActivity {
                 dsHocKy.clear();
                 dsNienKhoa.clear();
                 dsNienKhoa.add("<DEFAULT>");
-                Toast.makeText(HocPhiSinhVienMain.this,"Call api hpsv success",Toast.LENGTH_SHORT).show();
+//                Toast.makeText(HocPhiSinhVienMain.this,"Call api hpsv success",Toast.LENGTH_SHORT).show();
                 for (HocPhiSinhVien x: response.body()){
                     dataSV.add(x);
                     if(!dsNienKhoa.contains(x.getNienKhoa())){

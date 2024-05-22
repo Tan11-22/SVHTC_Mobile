@@ -291,7 +291,7 @@ public class DKLopTinChiMain extends AppCompatActivity {
                 }
                 adapter_ddkltc.notifyDataSetChanged();
                 System.out.println("Call api dkltc success");
-                Toast.makeText(DKLopTinChiMain.this,"Call api ddkltc success",Toast.LENGTH_SHORT).show();
+//                Toast.makeText(DKLopTinChiMain.this,"Call api ddkltc success",Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -314,7 +314,7 @@ public class DKLopTinChiMain extends AppCompatActivity {
                 dsDKTenMH.add("<DEFAULT>");
                 dsDKMaLop.add("<ALL>");
                 System.out.println("Call api dkltc success");
-                Toast.makeText(DKLopTinChiMain.this,"Call api dkltc success",Toast.LENGTH_SHORT).show();
+//                Toast.makeText(DKLopTinChiMain.this,"Call api dkltc success",Toast.LENGTH_SHORT).show();
                 for (DKLTC x: response.body()){
                     temp=x.getMaLop();
                     if(temp==null){
@@ -387,7 +387,7 @@ public class DKLopTinChiMain extends AppCompatActivity {
                 dsDKTenMH.clear();
                 dsDKTenMH.add("<DEFAULT>");
                 System.out.println("Call api dkltc success");
-                Toast.makeText(DKLopTinChiMain.this,"Call api dkltc success",Toast.LENGTH_SHORT).show();
+//                Toast.makeText(DKLopTinChiMain.this,"Call api dkltc success",Toast.LENGTH_SHORT).show();
                 for (DKLTC x: response.body()){
                     data.add(x);
                     temp=x.getTenMH();

@@ -21,7 +21,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
+import com.example.svhtcmobile.Api.ApiClient;
 import com.example.svhtcmobile.Api.apiService.IQuanTriThongTin;
+import com.example.svhtcmobile.Controller.MainQuanTriSinhVien;
 import com.example.svhtcmobile.Model.SinhVien;
 import com.example.svhtcmobile.R;
 
@@ -118,7 +123,6 @@ public class AdapterSinhVien extends ArrayAdapter<SinhVien> {
             @Override
             public void onClick(View v) {
                 // Hiển thị Dialog hoặc BottomSheetDialog để chỉnh sửa thông tin môn học
-
                 showEditDialog(sinhVien);
 
             }
@@ -200,24 +204,11 @@ public class AdapterSinhVien extends ArrayAdapter<SinhVien> {
         } else {
             radioGroupPhai.check(R.id.radioButtonMale); // Nếu là nam
         }
-        if(sinhVien.getHinhanh()!= null){
-        iQuanTriThongTin.encodeTenAnh(sinhVien.getHinhanh()).enqueue(new Callback<Map<String,String>>() {
-            @Override
-            public void onResponse(Call<Map<String,String>> call, Response<Map<String,String>> response) {
-                if (response.isSuccessful()) {
-                    Map<String,String> result = response.body();
-                    base64 = result.get("image");
-                    setBase64ImageToImageView(base64,ivAnhSV);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Map<String,String>> call, Throwable t) {
-                // Xử lý khi có lỗi xảy ra
-                System.out.println(t.getMessage().toString());
-                 Log.e("BASEaaa", t.getMessage());
-            }
-        });}
+        if(sinhVien.getHinhanh()!= null) {
+            Glide.with(mContext)
+                    .load(ApiClient.getBaseUrl()+ "auth/get-img?name="+sinhVien.getHinhanh())
+                    .into(ivAnhSV);
+        }
 
         edtDiaChi.setText(sinhVien.getDiachi());
         edtSDT.setText(sinhVien.getSdt());
